@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hospital Admin Panel{% endblock %}</title>
+</head>
+<body>
+    <aside>
+        <h2>Hospital SaaS</h2>
+        <p>Hospital Admin Panel</p>
+
+        <nav>
+            <ul>
+                <li><a href="/hospital-admin/">Dashboard</a></li>
+                <li><a href="/hospital-admin/departments/">Departments</a></li>
+                <li><a href="/hospital-admin/doctors/">Doctors</a></li>
+                <li><a href="/hospital-admin/receptionists/">Receptionists</a></li>
+                <li><a href="/hospital-admin/patients/">Patients</a></li>
+                <li><a href="/hospital-admin/appointments/">Appointments</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <header>
+        <h3>Hospital Administration</h3>
+        <p>Manage your hospital operations</p>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

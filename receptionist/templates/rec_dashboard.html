@@ -1,0 +1,36 @@
+{% extends "rec_base.html" %}
+
+{% block title %}Dashboard | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Receptionist Dashboard</h1>
+<p>Welcome to the Receptionist Panel.</p>
+
+<section>
+    <h3>Total Patients</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Today's Appointments</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Pending Appointments</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Pending Invoices</h3>
+    <p>0</p>
+</section>
+
+<h2>Quick Actions</h2>
+<ul>
+    <li><a href="/reception/patients/add/">Register Patient</a></li>
+    <li><a href="/reception/appointments/add/">Schedule Appointment</a></li>
+    <li><a href="/reception/appointments/">View Appointments</a></li>
+    <li><a href="/reception/billing/">Manage Billing</a></li>
+</ul>
+{% endblock %}

@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Doctor Panel{% endblock %}</title>
+</head>
+<body>
+    <aside>
+        <h2>Hospital SaaS</h2>
+        <p>Doctor Panel</p>
+
+        <nav>
+            <ul>
+                <li><a href="/doctor/">Dashboard</a></li>
+                <li><a href="/doctor/appointments/">Appointments</a></li>
+                <li><a href="/doctor/patients/">Patients</a></li>
+                <li><a href="/doctor/medical-records/">Medical Records</a></li>
+                <li><a href="/doctor/prescriptions/">Prescriptions</a></li>
+                <li><a href="/doctor/lab-reports/">Lab Reports</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <header>
+        <h3>Doctor Workspace</h3>
+        <p>Manage appointments and patient care</p>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

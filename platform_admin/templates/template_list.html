@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block title %}Hospital Templates | Super Admin{% endblock %}
+
+{% block content %}
+<h1>Hospital Website Templates</h1>
+<p>Manage the website designs available to registered hospitals.</p>
+
+<a href="/platform-admin/templates/add/">+ Add Template</a>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Template Name</th>
+            <th>Template Key</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Modern Care</td>
+            <td>modern-care</td>
+            <td>Clean and modern hospital website.</td>
+            <td>Active</td>
+            <td>
+                <a href="/platform-admin/templates/1/edit/">Edit</a> |
+                <a href="/platform-admin/templates/1/delete/">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

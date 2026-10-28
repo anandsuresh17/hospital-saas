@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Receptionist Panel{% endblock %}</title>
+</head>
+<body>
+
+    <aside>
+        <h2>Hospital SaaS</h2>
+        <p>Receptionist Panel</p>
+
+        <nav>
+            <ul>
+                <li><a href="/reception/">Dashboard</a></li>
+                <li><a href="/reception/patients/">Patients</a></li>
+                <li><a href="/reception/appointments/">Appointments</a></li>
+                <li><a href="/reception/billing/">Billing & Invoices</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <header>
+        <h3>Reception Desk</h3>
+        <p>Manage patient registration and appointments</p>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>

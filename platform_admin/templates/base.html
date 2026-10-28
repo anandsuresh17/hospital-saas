@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Super Admin Panel{% endblock %}</title>
+</head>
+<body>
+
+    <aside>
+        <h2>Hospital SaaS</h2>
+        <p>Super Admin Panel</p>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="/platform-admin/">Dashboard</a>
+                </li>
+                <li>
+                    <a href="/platform-admin/hospitals/">Hospitals</a>
+                </li>
+                <li>
+                    <a href="/platform-admin/subscriptions/">Subscription Plans</a>
+                </li>
+                <li>
+                    <a href="/platform-admin/templates/">Hospital Templates</a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <header>
+        <h3>Super Admin</h3>
+        <p>Hospital Management SaaS</p>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>

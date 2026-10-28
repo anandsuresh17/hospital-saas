@@ -1,0 +1,50 @@
+{% extends "rec_base.html" %}
+
+{% block title %}Schedule Appointment | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Schedule Appointment</h1>
+
+<form>
+    <label>Patient</label>
+    <select name="patient">
+        <option value="">Select Patient</option>
+        <option value="1">Sample Patient</option>
+    </select>
+
+    <br><br>
+
+    <label>Doctor</label>
+    <select name="doctor">
+        <option value="">Select Doctor</option>
+        <option value="1">Sample Doctor</option>
+    </select>
+
+    <br><br>
+
+    <label>Department</label>
+    <select name="department">
+        <option value="">Select Department</option>
+        <option value="1">Cardiology</option>
+    </select>
+
+    <br><br>
+
+    <label>Date</label>
+    <input type="date" name="date">
+
+    <br><br>
+
+    <label>Time</label>
+    <input type="time" name="time">
+
+    <br><br>
+
+    <label>Reason</label>
+    <textarea name="reason"></textarea>
+
+    <br><br>
+
+    <button type="button">Schedule Appointment</button>
+</form>
+{% endblock %}

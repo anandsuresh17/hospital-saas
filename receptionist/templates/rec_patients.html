@@ -1,0 +1,29 @@
+{% extends "rec_base.html" %}
+
+{% block title %}Patients | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Patient Management</h1>
+<p>Register patients and view their basic information.</p>
+
+<a href="/reception/patients/add/">+ Register Patient</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Patient ID</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>P001</td>
+            <td>Sample Patient</td>
+            <td>--</td>
+            <td>View</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

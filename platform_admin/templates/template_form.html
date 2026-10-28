@@ -1,0 +1,40 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} | Super Admin{% endblock %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+<form>
+    <p>
+        <label for="name">Template Name</label><br>
+        <input type="text" id="name" name="name" required>
+    </p>
+
+    <p>
+        <label for="template_key">Template Key</label><br>
+        <input type="text" id="template_key" name="template_key"
+            placeholder="e.g. modern-care" required>
+    </p>
+
+    <p>
+        <label for="description">Description</label><br>
+        <textarea id="description" name="description" rows="4"></textarea>
+    </p>
+
+    <p>
+        <label for="template_path">Template Path</label><br>
+        <input type="text" id="template_path" name="template_path"
+            placeholder="e.g. hospital_site/modern/index.html" required>
+    </p>
+
+    <p>
+        <label for="preview_image">Preview Image</label><br>
+        <input type="file" id="preview_image" name="preview_image" accept="image/*">
+    </p>
+
+    <button type="button">{{ button_text }}</button>
+    <a href="/platform-admin/templates/">Cancel</a>
+</form>
+{% endblock %}

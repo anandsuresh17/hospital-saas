@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block title %}Hospitals | Super Admin{% endblock %}
+
+{% block content %}
+<h1>Hospital Management</h1>
+<p>View and manage hospitals registered on the platform.</p>
+
+<a href="/platform-admin/hospitals/add/">+ Register Hospital</a>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Hospital Name</th>
+            <th>Email</th>
+            <th>Subscription</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>City Care Hospital</td>
+            <td>citycare@example.com</td>
+            <td>Standard</td>
+            <td>Active</td>
+            <td>
+                <a href="/platform-admin/hospitals/1/edit/">Edit</a> |
+                <a href="/platform-admin/hospitals/1/delete/">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

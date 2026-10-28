@@ -1,0 +1,29 @@
+{% extends "rec_base.html" %}
+
+{% block title %}Billing | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Billing & Invoices</h1>
+<p>View invoices and track their payment status.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Invoice ID</th>
+            <th>Patient</th>
+            <th>Amount</th>
+            <th>Payment Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>INV001</td>
+            <td>Sample Patient</td>
+            <td>₹0.00</td>
+            <td>Pending</td>
+            <td><a href="/reception/billing/1/">View Invoice</a></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

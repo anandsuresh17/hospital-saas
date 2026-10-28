@@ -1,0 +1,37 @@
+
+{% extends "ha_base.html" %}
+
+{% block title %}Dashboard | Hospital Admin{% endblock %}
+
+{% block content %}
+<h1>Hospital Dashboard</h1>
+<p>Welcome to the Hospital Admin panel.</p>
+
+<section>
+    <h3>Total Departments</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Total Doctors</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Total Patients</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Appointments</h3>
+    <p>0</p>
+</section>
+
+<h2>Quick Actions</h2>
+<ul>
+    <li><a href="/hospital-admin/departments/">Manage Departments</a></li>
+    <li><a href="/hospital-admin/doctors/">Manage Doctors</a></li>
+    <li><a href="/hospital-admin/patients/">View Patients</a></li>
+    <li><a href="/hospital-admin/appointments/">View Appointments</a></li>
+</ul>
+{% endblock %}

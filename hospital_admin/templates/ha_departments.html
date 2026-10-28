@@ -1,0 +1,18 @@
+
+{% extends "ha_base.html" %}
+{% block title %}Departments | Hospital Admin{% endblock %}
+{% block content %}
+<h1>Department Management</h1>
+<p>Manage departments within your hospital.</p>
+<button type="button">+ Add Department</button>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th><th>Department Name</th><th>Description</th><th>Status</th><th>Actions</th>
+    </tr>
+    <tr>
+        <td>1</td><td>Cardiology</td><td>Heart care</td><td>Active</td>
+        <td>Edit | Delete</td>
+    </tr>
+</table>
+{% endblock %}

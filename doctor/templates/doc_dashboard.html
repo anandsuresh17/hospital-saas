@@ -1,0 +1,33 @@
+
+{% extends "doc_base.html" %}
+
+{% block title %}Dashboard | Doctor{% endblock %}
+
+{% block content %}
+<h1>Doctor Dashboard</h1>
+<p>Welcome to your Doctor Panel.</p>
+
+<section>
+    <h3>Today's Appointments</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Total Patients</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Pending Appointments</h3>
+    <p>0</p>
+</section>
+
+<h2>Quick Actions</h2>
+<ul>
+    <li><a href="/doctor/appointments/">View Appointments</a></li>
+    <li><a href="/doctor/patients/">View Patients</a></li>
+    <li><a href="/doctor/medical-records/">Manage Medical Records</a></li>
+    <li><a href="/doctor/prescriptions/">Manage Prescriptions</a></li>
+    <li><a href="/doctor/lab-reports/">View Lab Reports</a></li>
+</ul>
+{% endblock %}

@@ -1,0 +1,17 @@
+
+{% extends "ha_base.html" %}
+{% block title %}Appointments | Hospital Admin{% endblock %}
+{% block content %}
+<h1>Appointment Management</h1>
+<p>Monitor appointments scheduled at your hospital.</p>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Appointment ID</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Status</th><th>Actions</th>
+    </tr>
+    <tr>
+        <td>1</td><td>Sample Patient</td><td>Dr. Sample</td>
+        <td>Pending</td><td>Pending</td><td>View</td>
+    </tr>
+</table>
+{% endblock %}

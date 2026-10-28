@@ -1,0 +1,32 @@
+{% extends "rec_base.html" %}
+
+{% block title %}Appointments | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Appointment Management</h1>
+
+<a href="/reception/appointments/add/">+ Schedule Appointment</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Sample Patient</td>
+            <td>Sample Doctor</td>
+            <td>Cardiology</td>
+            <td>--</td>
+            <td>--</td>
+            <td>Pending</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

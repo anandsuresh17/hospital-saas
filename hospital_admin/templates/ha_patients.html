@@ -1,0 +1,18 @@
+
+{% extends "ha_base.html" %}
+{% block title %}Patients | Hospital Admin{% endblock %}
+{% block content %}
+<h1>Patient Management</h1>
+<p>View and manage patient registrations for your hospital.</p>
+<button type="button">+ Register Patient</button>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Patient ID</th><th>Patient Name</th><th>Contact Number</th><th>Actions</th>
+    </tr>
+    <tr>
+        <td>P001</td><td>Sample Patient</td><td>0000000000</td>
+        <td>View Profile</td>
+    </tr>
+</table>
+{% endblock %}

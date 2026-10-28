@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Super Admin{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<p>Welcome to your Hospital Management SaaS platform.</p>
+
+<section>
+    <h3>Total Hospitals</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Active Hospitals</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Subscription Plans</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Hospital Templates</h3>
+    <p>0</p>
+</section>
+
+<h2>Quick Actions</h2>
+<ul>
+    <li><a href="/platform-admin/hospitals/add/">Register a Hospital</a></li>
+    <li><a href="/platform-admin/subscriptions/add/">Create Subscription Plan</a></li>
+    <li><a href="/platform-admin/templates/add/">Add Hospital Template</a></li>
+</ul>
+{% endblock %}

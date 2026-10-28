@@ -1,0 +1,58 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} | Super Admin{% endblock %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+<form>
+    <p>
+        <label for="name">Hospital Name</label><br>
+        <input type="text" id="name" name="name" required>
+    </p>
+
+    <p>
+        <label for="email">Email Address</label><br>
+        <input type="email" id="email" name="email" required>
+    </p>
+
+    <p>
+        <label for="contact_number">Contact Number</label><br>
+        <input type="tel" id="contact_number" name="contact_number">
+    </p>
+
+    <p>
+        <label for="address">Address</label><br>
+        <textarea id="address" name="address" rows="4"></textarea>
+    </p>
+
+    <p>
+        <label for="website">Website</label><br>
+        <input type="url" id="website" name="website">
+    </p>
+
+    <p>
+        <label for="subscription">Subscription Plan</label><br>
+        <select id="subscription" name="subscription">
+            <option value="">Select a plan</option>
+            <option value="basic">Basic</option>
+            <option value="standard">Standard</option>
+            <option value="premium">Premium</option>
+        </select>
+    </p>
+
+    <p>
+        <label for="template">Website Template</label><br>
+        <select id="template" name="template">
+            <option value="">Select a template</option>
+            <option value="1">Modern Care</option>
+            <option value="2">Classic Hospital</option>
+            <option value="3">Advanced Medical</option>
+        </select>
+    </p>
+
+    <button type="button">{{ button_text }}</button>
+    <a href="/platform-admin/hospitals/">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,39 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} | Super Admin{% endblock %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+<form>
+    <p>
+        <label for="name">Plan Name</label><br>
+        <input type="text" id="name" name="name" required>
+    </p>
+
+    <p>
+        <label for="price">Price (₹)</label><br>
+        <input type="number" id="price" name="price" min="0" step="0.01" required>
+    </p>
+
+    <p>
+        <label for="duration_days">Duration (days)</label><br>
+        <input type="number" id="duration_days" name="duration_days" min="1" value="30" required>
+    </p>
+
+    <p>
+        <label for="description">Description</label><br>
+        <textarea id="description" name="description" rows="3"></textarea>
+    </p>
+
+    <p>
+        <label for="features">Features</label><br>
+        <textarea id="features" name="features" rows="5"
+            placeholder="Enter the features included in this plan"></textarea>
+    </p>
+
+    <button type="button">{{ button_text }}</button>
+    <a href="/platform-admin/subscriptions/">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "rec_base.html" %}
+
+{% block title %}Invoice Details | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Invoice Details</h1>
+
+<p>Invoice ID: {{ record_id }}</p>
+<p>Patient: Sample Patient</p>
+<p>Consultation Fee: ₹0.00</p>
+<p>Lab Fee: ₹0.00</p>
+<p>Other Charges: ₹0.00</p>
+<p>Total Amount: ₹0.00</p>
+<p>Payment Status: Pending</p>
+
+<button type="button">Mark as Paid</button>
+{% endblock %}

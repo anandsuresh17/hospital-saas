@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block title %}Subscription Plans | Super Admin{% endblock %}
+
+{% block content %}
+<h1>Subscription Plans</h1>
+<p>Manage the subscription options offered to hospitals.</p>
+
+<a href="/platform-admin/subscriptions/add/">+ Add Subscription Plan</a>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Plan Name</th>
+            <th>Price</th>
+            <th>Duration</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Standard</td>
+            <td>₹2,999</td>
+            <td>30 days</td>
+            <td>Active</td>
+            <td>
+                <a href="/platform-admin/subscriptions/1/edit/">Edit</a> |
+                <a href="/platform-admin/subscriptions/1/delete/">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

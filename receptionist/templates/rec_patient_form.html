@@ -1,0 +1,46 @@
+{% extends "rec_base.html" %}
+
+{% block title %}Register Patient | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Register Patient</h1>
+
+<form>
+    <label>Full Name</label>
+    <input type="text" name="full_name">
+
+    <br><br>
+
+    <label>Email</label>
+    <input type="email" name="email">
+
+    <br><br>
+
+    <label>Contact Number</label>
+    <input type="tel" name="contact_number">
+
+    <br><br>
+
+    <label>Date of Birth</label>
+    <input type="date" name="date_of_birth">
+
+    <br><br>
+
+    <label>Gender</label>
+    <select name="gender">
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select>
+
+    <br><br>
+
+    <label>Address</label>
+    <textarea name="address"></textarea>
+
+    <br><br>
+
+    <button type="button">Register Patient</button>
+</form>
+{% endblock %}

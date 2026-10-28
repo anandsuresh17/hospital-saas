@@ -1,0 +1,18 @@
+
+{% extends "ha_base.html" %}
+{% block title %}Receptionists | Hospital Admin{% endblock %}
+{% block content %}
+<h1>Receptionist Management</h1>
+<p>Manage reception staff at your hospital.</p>
+<button type="button">+ Add Receptionist</button>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th><th>Name</th><th>Email</th><th>Contact Number</th><th>Actions</th>
+    </tr>
+    <tr>
+        <td>1</td><td>Sample Receptionist</td><td>reception@example.com</td>
+        <td>0000000000</td><td>Edit | View</td>
+    </tr>
+</table>
+{% endblock %}
