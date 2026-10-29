@@ -1,0 +1,39 @@
+
+{% extends 'pat_base.html' %}
+
+{% block title %}Medical Records{% endblock %}
+{% block page_heading %}Medical Records{% endblock %}
+
+{% block content %}
+<h2>My Medical History</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Doctor</th>
+            <th>Symptoms</th>
+            <th>Diagnosis</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>15-10-2026</td>
+            <td>Dr. Rahul Menon</td>
+            <td>Knee pain</td>
+            <td>Joint inflammation</td>
+            <td>Follow-up recommended</td>
+        </tr>
+        <tr>
+            <td>01-09-2026</td>
+            <td>Dr. Meera Nair</td>
+            <td>Fever</td>
+            <td>Viral infection</td>
+            <td>Rest and hydration</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Medical records will be available after your consultation and when the doctor saves them.</p>
+{% endblock %}

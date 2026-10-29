@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Patient Portal{% endblock %}</title>
+</head>
+<body>
+
+    <aside>
+        <h2>Patient Portal</h2>
+        <p>Hospital Management</p>
+
+        <nav>
+            <a href="{% url 'patient_dashboard' %}">Dashboard</a>
+            <a href="{% url 'patient_profile' %}">My Profile</a>
+            <a href="{% url 'patient_appointments' %}">My Appointments</a>
+            <a href="{% url 'patient_appointment_form' %}">Book Appointment</a>
+            <a href="{% url 'patient_medical_records' %}">Medical Records</a>
+            <a href="{% url 'patient_prescriptions' %}">Prescriptions</a>
+            <a href="{% url 'patient_lab_reports' %}">Lab Reports</a>
+            <a href="{% url 'patient_invoices' %}">Invoices</a>
+        </nav>
+    </aside>
+
+    <main>
+        <header>
+            <h1>{% block page_heading %}Patient Dashboard{% endblock %}</h1>
+            <p>Welcome to your patient portal.</p>
+        </header>
+
+        <section>
+            {% block content %}
+            {% endblock %}
+        </section>
+    </main>
+
+</body>
+</html>

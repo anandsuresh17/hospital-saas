@@ -1,0 +1,52 @@
+
+{% extends 'pat_base.html' %}
+
+{% block title %}My Appointments{% endblock %}
+{% block page_heading %}My Appointments{% endblock %}
+
+{% block content %}
+<h2>Appointment History</h2>
+
+<p><a href="{% url 'patient_appointment_form' %}">+ Book New Appointment</a></p>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Dr. Arun Kumar</td>
+            <td>Cardiology</td>
+            <td>05-11-2026</td>
+            <td>10:30 AM</td>
+            <td>Regular check-up</td>
+            <td>Confirmed</td>
+        </tr>
+        <tr>
+            <td>Dr. Meera Nair</td>
+            <td>General Medicine</td>
+            <td>10-11-2026</td>
+            <td>11:00 AM</td>
+            <td>Fever</td>
+            <td>Pending</td>
+        </tr>
+        <tr>
+            <td>Dr. Rahul Menon</td>
+            <td>Orthopedics</td>
+            <td>15-10-2026</td>
+            <td>09:30 AM</td>
+            <td>Knee pain</td>
+            <td>Completed</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Online appointment requests will initially have Pending status until confirmed by the hospital.</p>
+{% endblock %}

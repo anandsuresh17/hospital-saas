@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'hospital_admin',
     'doctor',
     'receptionist',
+    'patient',
+    'hospital_site',
+
 
 
 

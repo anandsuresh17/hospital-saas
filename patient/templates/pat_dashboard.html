@@ -1,0 +1,55 @@
+
+{% extends 'pat_base.html' %}
+
+{% block title %}Patient Dashboard{% endblock %}
+{% block page_heading %}Dashboard{% endblock %}
+
+{% block content %}
+<h2>Welcome Back, Patient!</h2>
+<p>Here is an overview of your healthcare information.</p>
+
+<div>
+    <h3>Upcoming Appointments</h3>
+    <p>2</p>
+</div>
+
+<div>
+    <h3>Medical Records</h3>
+    <p>5</p>
+</div>
+
+<div>
+    <h3>Prescriptions</h3>
+    <p>3</p>
+</div>
+
+<div>
+    <h3>Pending Invoices</h3>
+    <p>₹1,500</p>
+</div>
+
+<h2>Upcoming Appointment</h2>
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Dr. Arun Kumar</td>
+            <td>Cardiology</td>
+            <td>05-11-2026</td>
+            <td>10:30 AM</td>
+            <td>Confirmed</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><a href="{% url 'patient_appointment_form' %}">Book an Appointment</a></p>
+<p><a href="{% url 'patient_appointments' %}">View All Appointments</a></p>
+{% endblock %}

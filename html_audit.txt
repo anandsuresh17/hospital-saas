@@ -1,0 +1,1716 @@
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\doctor\templates\doc_appointments.html ==========
+
+{% extends "doc_base.html" %}
+{% block title %}Appointments | Doctor{% endblock %}
+{% block content %}
+<h1>My Appointments</h1>
+<p>View and manage your assigned appointments.</p>
+<table>
+    <thead>
+        <tr><th>Patient</th><th>Date</th><th>Time</th><th>Status</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Sample Patient</td><td>--</td><td>--</td><td>Pending</td><td>View</td></tr>
+    </tbody>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\doctor\templates\doc_base.html ==========
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Doctor Panel{% endblock %}</title>
+</head>
+<body>
+    <aside>
+        <h2>Hospital SaaS</h2>
+        <p>Doctor Panel</p>
+
+        <nav>
+            <ul>
+                <li><a href="/doctor/">Dashboard</a></li>
+                <li><a href="/doctor/appointments/">Appointments</a></li>
+                <li><a href="/doctor/patients/">Patients</a></li>
+                <li><a href="/doctor/medical-records/">Medical Records</a></li>
+                <li><a href="/doctor/prescriptions/">Prescriptions</a></li>
+                <li><a href="/doctor/lab-reports/">Lab Reports</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <header>
+        <h3>Doctor Workspace</h3>
+        <p>Manage appointments and patient care</p>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\doctor\templates\doc_dashboard.html ==========
+
+{% extends "doc_base.html" %}
+
+{% block title %}Dashboard | Doctor{% endblock %}
+
+{% block content %}
+<h1>Doctor Dashboard</h1>
+<p>Welcome to your Doctor Panel.</p>
+
+<section>
+    <h3>Today's Appointments</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Total Patients</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Pending Appointments</h3>
+    <p>0</p>
+</section>
+
+<h2>Quick Actions</h2>
+<ul>
+    <li><a href="/doctor/appointments/">View Appointments</a></li>
+    <li><a href="/doctor/patients/">View Patients</a></li>
+    <li><a href="/doctor/medical-records/">Manage Medical Records</a></li>
+    <li><a href="/doctor/prescriptions/">Manage Prescriptions</a></li>
+    <li><a href="/doctor/lab-reports/">View Lab Reports</a></li>
+</ul>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\doctor\templates\doc_lab_reports.html ==========
+
+{% extends "doc_base.html" %}
+{% block title %}Lab Reports | Doctor{% endblock %}
+{% block content %}
+<h1>Lab Reports</h1>
+<p>Review laboratory reports associated with your patients.</p>
+<table>
+    <thead><tr><th>Patient</th><th>Test</th><th>Test Date</th><th>Action</th></tr></thead>
+    <tbody><tr><td>Sample Patient</td><td>--</td><td>--</td><td>View</td></tr></tbody>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\doctor\templates\doc_medical_records.html ==========
+
+{% extends "doc_base.html" %}
+{% block title %}Medical Records | Doctor{% endblock %}
+{% block content %}
+<h1>Medical Records</h1>
+<p>Review and maintain clinical records for authorized patients.</p>
+<table>
+    <thead><tr><th>Patient</th><th>Diagnosis</th><th>Date</th><th>Action</th></tr></thead>
+    <tbody><tr><td>Sample Patient</td><td>--</td><td>--</td><td>View</td></tr></tbody>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\doctor\templates\doc_patients.html ==========
+
+{% extends "doc_base.html" %}
+{% block title %}Patients | Doctor{% endblock %}
+{% block content %}
+<h1>My Patients</h1>
+<p>View patients associated with your appointments.</p>
+<table>
+    <thead><tr><th>Patient ID</th><th>Name</th><th>Contact</th><th>Action</th></tr></thead>
+    <tbody><tr><td>P001</td><td>Sample Patient</td><td>--</td><td>View</td></tr></tbody>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\doctor\templates\doc_prescriptions.html ==========
+
+{% extends "doc_base.html" %}
+{% block title %}Prescriptions | Doctor{% endblock %}
+{% block content %}
+<h1>Prescriptions</h1>
+<p>Create and review prescriptions for your patients.</p>
+<table>
+    <thead><tr><th>Patient</th><th>Date</th><th>Medicines</th><th>Action</th></tr></thead>
+    <tbody><tr><td>Sample Patient</td><td>--</td><td>--</td><td>View</td></tr></tbody>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_admin\templates\ha_appointments.html ==========
+
+{% extends "ha_base.html" %}
+{% block title %}Appointments | Hospital Admin{% endblock %}
+{% block content %}
+<h1>Appointment Management</h1>
+<p>Monitor appointments scheduled at your hospital.</p>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Appointment ID</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Status</th><th>Actions</th>
+    </tr>
+    <tr>
+        <td>1</td><td>Sample Patient</td><td>Dr. Sample</td>
+        <td>Pending</td><td>Pending</td><td>View</td>
+    </tr>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_admin\templates\ha_base.html ==========
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hospital Admin Panel{% endblock %}</title>
+</head>
+<body>
+    <aside>
+        <h2>Hospital SaaS</h2>
+        <p>Hospital Admin Panel</p>
+
+        <nav>
+            <ul>
+                <li><a href="/hospital-admin/">Dashboard</a></li>
+                <li><a href="/hospital-admin/departments/">Departments</a></li>
+                <li><a href="/hospital-admin/doctors/">Doctors</a></li>
+                <li><a href="/hospital-admin/receptionists/">Receptionists</a></li>
+                <li><a href="/hospital-admin/patients/">Patients</a></li>
+                <li><a href="/hospital-admin/appointments/">Appointments</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <header>
+        <h3>Hospital Administration</h3>
+        <p>Manage your hospital operations</p>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_admin\templates\ha_dashboard.html ==========
+
+{% extends "ha_base.html" %}
+
+{% block title %}Dashboard | Hospital Admin{% endblock %}
+
+{% block content %}
+<h1>Hospital Dashboard</h1>
+<p>Welcome to the Hospital Admin panel.</p>
+
+<section>
+    <h3>Total Departments</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Total Doctors</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Total Patients</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Appointments</h3>
+    <p>0</p>
+</section>
+
+<h2>Quick Actions</h2>
+<ul>
+    <li><a href="/hospital-admin/departments/">Manage Departments</a></li>
+    <li><a href="/hospital-admin/doctors/">Manage Doctors</a></li>
+    <li><a href="/hospital-admin/patients/">View Patients</a></li>
+    <li><a href="/hospital-admin/appointments/">View Appointments</a></li>
+</ul>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_admin\templates\ha_departments.html ==========
+
+{% extends "ha_base.html" %}
+{% block title %}Departments | Hospital Admin{% endblock %}
+{% block content %}
+<h1>Department Management</h1>
+<p>Manage departments within your hospital.</p>
+<button type="button">+ Add Department</button>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th><th>Department Name</th><th>Description</th><th>Status</th><th>Actions</th>
+    </tr>
+    <tr>
+        <td>1</td><td>Cardiology</td><td>Heart care</td><td>Active</td>
+        <td>Edit | Delete</td>
+    </tr>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_admin\templates\ha_doctors.html ==========
+
+{% extends "ha_base.html" %}
+{% block title %}Doctors | Hospital Admin{% endblock %}
+{% block content %}
+<h1>Doctor Management</h1>
+<p>Manage doctors working at your hospital.</p>
+<button type="button">+ Add Doctor</button>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th><th>Doctor Name</th><th>Specialization</th><th>Department</th><th>Status</th><th>Actions</th>
+    </tr>
+    <tr>
+        <td>1</td><td>Dr. Sample</td><td>Cardiology</td><td>Cardiology</td><td>Active</td>
+        <td>Edit | View</td>
+    </tr>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_admin\templates\ha_patients.html ==========
+
+{% extends "ha_base.html" %}
+{% block title %}Patients | Hospital Admin{% endblock %}
+{% block content %}
+<h1>Patient Management</h1>
+<p>View and manage patient registrations for your hospital.</p>
+<button type="button">+ Register Patient</button>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Patient ID</th><th>Patient Name</th><th>Contact Number</th><th>Actions</th>
+    </tr>
+    <tr>
+        <td>P001</td><td>Sample Patient</td><td>0000000000</td>
+        <td>View Profile</td>
+    </tr>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_admin\templates\ha_receptionists.html ==========
+
+{% extends "ha_base.html" %}
+{% block title %}Receptionists | Hospital Admin{% endblock %}
+{% block content %}
+<h1>Receptionist Management</h1>
+<p>Manage reception staff at your hospital.</p>
+<button type="button">+ Add Receptionist</button>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th><th>Name</th><th>Email</th><th>Contact Number</th><th>Actions</th>
+    </tr>
+    <tr>
+        <td>1</td><td>Sample Receptionist</td><td>reception@example.com</td>
+        <td>0000000000</td><td>Edit | View</td>
+    </tr>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_site\templates\hs_about.html ==========
+
+{% extends 'hs_base.html' %}
+
+{% block title %}About Us | Hospital{% endblock %}
+
+{% block content %}
+<section>
+    <h2>About Our Hospital</h2>
+    <p>We are committed to delivering safe, accessible, and quality healthcare to our community.</p>
+    <p>Our hospital brings together skilled healthcare professionals and modern facilities to support patient well-being.</p>
+</section>
+
+<section>
+    <h2>Our Mission</h2>
+    <p>To provide compassionate, reliable, and patient-centred healthcare.</p>
+</section>
+
+<section>
+    <h2>Our Vision</h2>
+    <p>To become a trusted healthcare provider known for quality, safety, and service.</p>
+</section>
+
+<section>
+    <h2>Our Facilities</h2>
+    <ul>
+        <li>Consultation rooms</li>
+        <li>Diagnostic services</li>
+        <li>Laboratory facilities</li>
+        <li>Patient support services</li>
+    </ul>
+</section>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_site\templates\hs_appointment_form.html ==========
+
+{% extends 'hs_base.html' %}
+
+{% block title %}Book Appointment | Hospital{% endblock %}
+
+{% block content %}
+<h2>Request an Appointment</h2>
+<p>Log in to your patient account before submitting your appointment request.</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label for="department">Department</label><br>
+    <select id="department" name="department" required>
+        <option value="">Select Department</option>
+        <option value="cardiology">Cardiology</option>
+        <option value="general-medicine">General Medicine</option>
+        <option value="orthopedics">Orthopedics</option>
+        <option value="pediatrics">Pediatrics</option>
+    </select><br><br>
+
+    <label for="doctor">Doctor</label><br>
+    <select id="doctor" name="doctor" required>
+        <option value="">Select Doctor</option>
+        <option value="doctor-1">Dr. Arun Kumar</option>
+        <option value="doctor-2">Dr. Meera Nair</option>
+        <option value="doctor-3">Dr. Rahul Menon</option>
+    </select><br><br>
+
+    <label for="date">Preferred Date</label><br>
+    <input type="date" id="date" name="date" required><br><br>
+
+    <label for="time">Preferred Time</label><br>
+    <input type="time" id="time" name="time" required><br><br>
+
+    <label for="reason">Reason for Visit</label><br>
+    <textarea id="reason" name="reason" rows="4"></textarea><br><br>
+
+    <button type="submit">Submit Appointment Request</button>
+</form>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_site\templates\hs_base.html ==========
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hospital Website{% endblock %}</title>
+</head>
+<body>
+
+    <header>
+        <h1>{% block hospital_name %}City Care Hospital{% endblock %}</h1>
+        <p>Your Health, Our Priority</p>
+
+        <nav>
+            <a href="{% url 'hospital_site_home' hospital_slug=hospital_slug %}">Home</a> |
+            <a href="{% url 'hospital_site_about' hospital_slug=hospital_slug %}">About Us</a> |
+            <a href="{% url 'hospital_site_departments' hospital_slug=hospital_slug %}">Departments</a> |
+            <a href="{% url 'hospital_site_doctors' hospital_slug=hospital_slug %}">Our Doctors</a> |
+            <a href="{% url 'hospital_site_contact' hospital_slug=hospital_slug %}">Contact Us</a>
+        </nav>
+
+        <p>
+            <a href="{% url 'patient_appointment_form' %}">Book Appointment</a>
+        </p>
+    </header>
+
+    <hr>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>&copy; 2026 City Care Hospital. All rights reserved.</p>
+        <p>For emergencies, contact your local emergency services.</p>
+    </footer>
+
+</body>
+</html>
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_site\templates\hs_contact.html ==========
+
+{% extends 'hs_base.html' %}
+
+{% block title %}Contact Us | Hospital{% endblock %}
+
+{% block content %}
+<h2>Contact Us</h2>
+<p>Contact our hospital for general enquiries and appointment assistance.</p>
+
+<section>
+    <h3>Address</h3>
+    <p>Hospital address will be displayed here.</p>
+</section>
+
+<section>
+    <h3>Phone</h3>
+    <p>Hospital contact number will be displayed here.</p>
+</section>
+
+<section>
+    <h3>Email</h3>
+    <p>Hospital email address will be displayed here.</p>
+</section>
+
+<section>
+    <h3>Working Hours</h3>
+    <p>Consultation hours will be displayed here.</p>
+</section>
+
+<section>
+    <h3>Emergency Information</h3>
+    <p>For emergencies, contact the hospital's verified emergency number or your local emergency services.</p>
+</section>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_site\templates\hs_departments.html ==========
+
+{% extends 'hs_base.html' %}
+
+{% block title %}Departments | Hospital{% endblock %}
+
+{% block content %}
+<h2>Departments and Services</h2>
+<p>Explore our medical departments and healthcare services.</p>
+
+<section>
+    <h3>General Medicine</h3>
+    <p>Consultations for common illnesses, preventive care, and general health concerns.</p>
+</section>
+
+<section>
+    <h3>Cardiology</h3>
+    <p>Assessment and management of heart-related conditions.</p>
+</section>
+
+<section>
+    <h3>Orthopedics</h3>
+    <p>Care for bone, joint, and musculoskeletal conditions.</p>
+</section>
+
+<section>
+    <h3>Pediatrics</h3>
+    <p>Healthcare services for infants, children, and adolescents.</p>
+</section>
+
+<section>
+    <h3>Laboratory Services</h3>
+    <p>Diagnostic testing to support medical assessment and treatment.</p>
+</section>
+
+<p>
+    <a href="{% url 'hospital_site_doctors' hospital_slug=hospital_slug %}">View Our Doctors</a>
+</p>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_site\templates\hs_doctors.html ==========
+
+{% extends 'hs_base.html' %}
+
+{% block title %}Our Doctors | Hospital{% endblock %}
+
+{% block content %}
+<h2>Meet Our Doctors</h2>
+<p>Explore our medical team and their areas of specialization.</p>
+
+<section>
+    <h3>Dr. Arun Kumar</h3>
+    <p>Department: Cardiology</p>
+    <p>Qualification: MBBS, MD</p>
+    <p>Specialization: Heart health</p>
+    <a href="{% url 'hospital_site_appointment' hospital_slug=hospital_slug %}">Request Appointment</a>
+</section>
+
+<hr>
+
+<section>
+    <h3>Dr. Meera Nair</h3>
+    <p>Department: General Medicine</p>
+    <p>Qualification: MBBS, MD</p>
+    <p>Specialization: General healthcare</p>
+    <a href="{% url 'hospital_site_appointment' hospital_slug=hospital_slug %}">Request Appointment</a>
+</section>
+
+<hr>
+
+<section>
+    <h3>Dr. Rahul Menon</h3>
+    <p>Department: Orthopedics</p>
+    <p>Qualification: MBBS, MS</p>
+    <p>Specialization: Bone and joint care</p>
+    <a href="{% url 'hospital_site_appointment' hospital_slug=hospital_slug %}">Request Appointment</a>
+</section>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\hospital_site\templates\hs_home.html ==========
+
+{% extends 'hs_base.html' %}
+
+{% block title %}Home | Hospital{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Welcome to {{ hospital_slug|title }} Hospital</h2>
+    <p>Providing quality healthcare with compassion, expertise, and modern medical facilities.</p>
+    <p>
+        <a href="{% url 'hospital_site_doctors' hospital_slug=hospital_slug %}">Meet Our Doctors</a>
+        |
+        <a href="{% url 'hospital_site_appointment' hospital_slug=hospital_slug %}">Book an Appointment</a>
+    </p>
+</section>
+
+<section>
+    <h2>Our Healthcare Services</h2>
+    <ul>
+        <li>General Medicine</li>
+        <li>Cardiology</li>
+        <li>Orthopedics</li>
+        <li>Pediatrics</li>
+        <li>Diagnostic and Laboratory Services</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Why Choose Us?</h2>
+    <p>Experienced medical professionals, patient-focused care, and modern healthcare facilities.</p>
+</section>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\patient\templates\pat_appointments.html ==========
+
+{% extends 'pat_base.html' %}
+
+{% block title %}My Appointments{% endblock %}
+{% block page_heading %}My Appointments{% endblock %}
+
+{% block content %}
+<h2>Appointment History</h2>
+
+<p><a href="{% url 'patient_appointment_form' %}">+ Book New Appointment</a></p>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Dr. Arun Kumar</td>
+            <td>Cardiology</td>
+            <td>05-11-2026</td>
+            <td>10:30 AM</td>
+            <td>Regular check-up</td>
+            <td>Confirmed</td>
+        </tr>
+        <tr>
+            <td>Dr. Meera Nair</td>
+            <td>General Medicine</td>
+            <td>10-11-2026</td>
+            <td>11:00 AM</td>
+            <td>Fever</td>
+            <td>Pending</td>
+        </tr>
+        <tr>
+            <td>Dr. Rahul Menon</td>
+            <td>Orthopedics</td>
+            <td>15-10-2026</td>
+            <td>09:30 AM</td>
+            <td>Knee pain</td>
+            <td>Completed</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Online appointment requests will initially have Pending status until confirmed by the hospital.</p>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\patient\templates\pat_appointment_form.html ==========
+
+{% extends 'pat_base.html' %}
+
+{% block title %}Book Appointment{% endblock %}
+{% block page_heading %}Book Appointment{% endblock %}
+
+{% block content %}
+<h2>Request a New Appointment</h2>
+<p>Your appointment request will be saved as Pending until the hospital confirms it.</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Department</label><br>
+    <select name="department" required>
+        <option value="">Select Department</option>
+        <option>Cardiology</option>
+        <option>General Medicine</option>
+        <option>Orthopedics</option>
+        <option>Dermatology</option>
+        <option>Pediatrics</option>
+    </select><br><br>
+
+    <label>Doctor</label><br>
+    <select name="doctor" required>
+        <option value="">Select Doctor</option>
+        <option>Dr. Arun Kumar</option>
+        <option>Dr. Meera Nair</option>
+        <option>Dr. Rahul Menon</option>
+    </select><br><br>
+
+    <label>Preferred Date</label><br>
+    <input type="date" name="date" required><br><br>
+
+    <label>Preferred Time</label><br>
+    <input type="time" name="time" required><br><br>
+
+    <label>Reason for Visit</label><br>
+    <textarea name="reason" rows="4" placeholder="Briefly describe your concern"></textarea><br><br>
+
+    <button type="submit">Submit Appointment Request</button>
+</form>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\patient\templates\pat_base.html ==========
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Patient Portal{% endblock %}</title>
+</head>
+<body>
+
+    <aside>
+        <h2>Patient Portal</h2>
+        <p>Hospital Management</p>
+
+        <nav>
+            <a href="{% url 'patient_dashboard' %}">Dashboard</a>
+            <a href="{% url 'patient_profile' %}">My Profile</a>
+            <a href="{% url 'patient_appointments' %}">My Appointments</a>
+            <a href="{% url 'patient_appointment_form' %}">Book Appointment</a>
+            <a href="{% url 'patient_medical_records' %}">Medical Records</a>
+            <a href="{% url 'patient_prescriptions' %}">Prescriptions</a>
+            <a href="{% url 'patient_lab_reports' %}">Lab Reports</a>
+            <a href="{% url 'patient_invoices' %}">Invoices</a>
+        </nav>
+    </aside>
+
+    <main>
+        <header>
+            <h1>{% block page_heading %}Patient Dashboard{% endblock %}</h1>
+            <p>Welcome to your patient portal.</p>
+        </header>
+
+        <section>
+            {% block content %}
+            {% endblock %}
+        </section>
+    </main>
+
+</body>
+</html>
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\patient\templates\pat_dashboard.html ==========
+
+{% extends 'pat_base.html' %}
+
+{% block title %}Patient Dashboard{% endblock %}
+{% block page_heading %}Dashboard{% endblock %}
+
+{% block content %}
+<h2>Welcome Back, Patient!</h2>
+<p>Here is an overview of your healthcare information.</p>
+
+<div>
+    <h3>Upcoming Appointments</h3>
+    <p>2</p>
+</div>
+
+<div>
+    <h3>Medical Records</h3>
+    <p>5</p>
+</div>
+
+<div>
+    <h3>Prescriptions</h3>
+    <p>3</p>
+</div>
+
+<div>
+    <h3>Pending Invoices</h3>
+    <p>₹1,500</p>
+</div>
+
+<h2>Upcoming Appointment</h2>
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Dr. Arun Kumar</td>
+            <td>Cardiology</td>
+            <td>05-11-2026</td>
+            <td>10:30 AM</td>
+            <td>Confirmed</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><a href="{% url 'patient_appointment_form' %}">Book an Appointment</a></p>
+<p><a href="{% url 'patient_appointments' %}">View All Appointments</a></p>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\patient\templates\pat_invoices.html ==========
+
+{% extends 'pat_base.html' %}
+
+{% block title %}My Invoices{% endblock %}
+{% block page_heading %}Invoices & Payments{% endblock %}
+
+{% block content %}
+<h2>My Billing History</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Invoice ID</th>
+            <th>Appointment</th>
+            <th>Consultation Fee</th>
+            <th>Lab Fee</th>
+            <th>Other Charges</th>
+            <th>Total Amount</th>
+            <th>Payment Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>INV-001</td>
+            <td>15-10-2026</td>
+            <td>₹1,000</td>
+            <td>₹300</td>
+            <td>₹200</td>
+            <td>₹1,500</td>
+            <td>Pending</td>
+        </tr>
+        <tr>
+            <td>INV-002</td>
+            <td>01-09-2026</td>
+            <td>₹800</td>
+            <td>₹0</td>
+            <td>₹0</td>
+            <td>₹800</td>
+            <td>Paid</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Payment processing and invoice data will be connected during CRUD implementation.</p>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\patient\templates\pat_lab_reports.html ==========
+
+{% extends 'pat_base.html' %}
+
+{% block title %}Lab Reports{% endblock %}
+{% block page_heading %}Lab Reports{% endblock %}
+
+{% block content %}
+<h2>My Laboratory Reports</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Test Name</th>
+            <th>Date</th>
+            <th>Requested By</th>
+            <th>Result Summary</th>
+            <th>Report File</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Complete Blood Count</td>
+            <td>12-10-2026</td>
+            <td>Dr. Meera Nair</td>
+            <td>Sample result</td>
+            <td><a href="#">View Report</a></td>
+        </tr>
+        <tr>
+            <td>Blood Sugar</td>
+            <td>12-10-2026</td>
+            <td>Dr. Meera Nair</td>
+            <td>Sample result</td>
+            <td><a href="#">View Report</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Your actual report files will be displayed here when uploaded by authorized hospital staff.</p>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\patient\templates\pat_medical_records.html ==========
+
+{% extends 'pat_base.html' %}
+
+{% block title %}Medical Records{% endblock %}
+{% block page_heading %}Medical Records{% endblock %}
+
+{% block content %}
+<h2>My Medical History</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Doctor</th>
+            <th>Symptoms</th>
+            <th>Diagnosis</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>15-10-2026</td>
+            <td>Dr. Rahul Menon</td>
+            <td>Knee pain</td>
+            <td>Joint inflammation</td>
+            <td>Follow-up recommended</td>
+        </tr>
+        <tr>
+            <td>01-09-2026</td>
+            <td>Dr. Meera Nair</td>
+            <td>Fever</td>
+            <td>Viral infection</td>
+            <td>Rest and hydration</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Medical records will be available after your consultation and when the doctor saves them.</p>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\patient\templates\pat_prescriptions.html ==========
+
+{% extends 'pat_base.html' %}
+
+{% block title %}My Prescriptions{% endblock %}
+{% block page_heading %}Prescriptions{% endblock %}
+
+{% block content %}
+<h2>My Prescriptions</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Doctor</th>
+            <th>Medicine</th>
+            <th>Dosage</th>
+            <th>Frequency</th>
+            <th>Duration</th>
+            <th>Instructions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>15-10-2026</td>
+            <td>Dr. Rahul Menon</td>
+            <td>Sample Medicine A</td>
+            <td>As prescribed</td>
+            <td>As prescribed</td>
+            <td>5 days</td>
+            <td>Follow the doctor's instructions</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>These are sample entries for layout testing. Actual prescriptions will be entered by your doctor.</p>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\patient\templates\pat_profile.html ==========
+
+{% extends 'pat_base.html' %}
+
+{% block title %}My Profile{% endblock %}
+{% block page_heading %}My Profile{% endblock %}
+
+{% block content %}
+<h2>Personal Information</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Full Name</label><br>
+    <input type="text" name="full_name" value="Sample Patient"><br><br>
+
+    <label>Email Address</label><br>
+    <input type="email" name="email" value="patient@example.com"><br><br>
+
+    <label>Date of Birth</label><br>
+    <input type="date" name="dob"><br><br>
+
+    <label>Gender</label><br>
+    <select name="gender">
+        <option value="">Select Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+    </select><br><br>
+
+    <label>Contact Number</label><br>
+    <input type="tel" name="contact_number"><br><br>
+
+    <label>Blood Group</label><br>
+    <select name="blood_group">
+        <option value="">Select Blood Group</option>
+        <option>A+</option>
+        <option>A-</option>
+        <option>B+</option>
+        <option>B-</option>
+        <option>AB+</option>
+        <option>AB-</option>
+        <option>O+</option>
+        <option>O-</option>
+    </select><br><br>
+
+    <label>Address</label><br>
+    <textarea name="address" rows="4"></textarea><br><br>
+
+    <label>Emergency Contact</label><br>
+    <input type="tel" name="emergency_contact"><br><br>
+
+    <button type="submit">Update Profile</button>
+</form>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\platform_admin\templates\base.html ==========
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Super Admin Panel{% endblock %}</title>
+</head>
+<body>
+
+    <aside>
+        <h2>Hospital SaaS</h2>
+        <p>Super Admin Panel</p>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="/platform-admin/">Dashboard</a>
+                </li>
+                <li>
+                    <a href="/platform-admin/hospitals/">Hospitals</a>
+                </li>
+                <li>
+                    <a href="/platform-admin/subscriptions/">Subscription Plans</a>
+                </li>
+                <li>
+                    <a href="/platform-admin/templates/">Hospital Templates</a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <header>
+        <h3>Super Admin</h3>
+        <p>Hospital Management SaaS</p>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\platform_admin\templates\dashboard.html ==========
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Super Admin{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<p>Welcome to your Hospital Management SaaS platform.</p>
+
+<section>
+    <h3>Total Hospitals</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Active Hospitals</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Subscription Plans</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Hospital Templates</h3>
+    <p>0</p>
+</section>
+
+<h2>Quick Actions</h2>
+<ul>
+    <li><a href="/platform-admin/hospitals/add/">Register a Hospital</a></li>
+    <li><a href="/platform-admin/subscriptions/add/">Create Subscription Plan</a></li>
+    <li><a href="/platform-admin/templates/add/">Add Hospital Template</a></li>
+</ul>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\platform_admin\templates\hospital_confirm_delete.html ==========
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} | Super Admin{% endblock %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+<p>Are you sure you want to proceed with this action?</p>
+<p>Record ID: {{ record_id }}</p>
+
+<p>This is a preview only. No record will be deleted.</p>
+
+<button type="button" disabled>Confirm Delete</button>
+<a href="/platform-admin/">Cancel</a>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\platform_admin\templates\hospital_form.html ==========
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} | Super Admin{% endblock %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+<form>
+    <p>
+        <label for="name">Hospital Name</label><br>
+        <input type="text" id="name" name="name" required>
+    </p>
+
+    <p>
+        <label for="email">Email Address</label><br>
+        <input type="email" id="email" name="email" required>
+    </p>
+
+    <p>
+        <label for="contact_number">Contact Number</label><br>
+        <input type="tel" id="contact_number" name="contact_number">
+    </p>
+
+    <p>
+        <label for="address">Address</label><br>
+        <textarea id="address" name="address" rows="4"></textarea>
+    </p>
+
+    <p>
+        <label for="website">Website</label><br>
+        <input type="url" id="website" name="website">
+    </p>
+
+    <p>
+        <label for="subscription">Subscription Plan</label><br>
+        <select id="subscription" name="subscription">
+            <option value="">Select a plan</option>
+            <option value="basic">Basic</option>
+            <option value="standard">Standard</option>
+            <option value="premium">Premium</option>
+        </select>
+    </p>
+
+    <p>
+        <label for="template">Website Template</label><br>
+        <select id="template" name="template">
+            <option value="">Select a template</option>
+            <option value="1">Modern Care</option>
+            <option value="2">Classic Hospital</option>
+            <option value="3">Advanced Medical</option>
+        </select>
+    </p>
+
+    <button type="button">{{ button_text }}</button>
+    <a href="/platform-admin/hospitals/">Cancel</a>
+</form>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\platform_admin\templates\hospital_list.html ==========
+
+{% extends "base.html" %}
+
+{% block title %}Hospitals | Super Admin{% endblock %}
+
+{% block content %}
+<h1>Hospital Management</h1>
+<p>View and manage hospitals registered on the platform.</p>
+
+<a href="/platform-admin/hospitals/add/">+ Register Hospital</a>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Hospital Name</th>
+            <th>Email</th>
+            <th>Subscription</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>City Care Hospital</td>
+            <td>citycare@example.com</td>
+            <td>Standard</td>
+            <td>Active</td>
+            <td>
+                <a href="/platform-admin/hospitals/1/edit/">Edit</a> |
+                <a href="/platform-admin/hospitals/1/delete/">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\platform_admin\templates\subscription_form.html ==========
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} | Super Admin{% endblock %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+<form>
+    <p>
+        <label for="name">Plan Name</label><br>
+        <input type="text" id="name" name="name" required>
+    </p>
+
+    <p>
+        <label for="price">Price (₹)</label><br>
+        <input type="number" id="price" name="price" min="0" step="0.01" required>
+    </p>
+
+    <p>
+        <label for="duration_days">Duration (days)</label><br>
+        <input type="number" id="duration_days" name="duration_days" min="1" value="30" required>
+    </p>
+
+    <p>
+        <label for="description">Description</label><br>
+        <textarea id="description" name="description" rows="3"></textarea>
+    </p>
+
+    <p>
+        <label for="features">Features</label><br>
+        <textarea id="features" name="features" rows="5"
+            placeholder="Enter the features included in this plan"></textarea>
+    </p>
+
+    <button type="button">{{ button_text }}</button>
+    <a href="/platform-admin/subscriptions/">Cancel</a>
+</form>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\platform_admin\templates\subscription_list.html ==========
+
+{% extends "base.html" %}
+
+{% block title %}Subscription Plans | Super Admin{% endblock %}
+
+{% block content %}
+<h1>Subscription Plans</h1>
+<p>Manage the subscription options offered to hospitals.</p>
+
+<a href="/platform-admin/subscriptions/add/">+ Add Subscription Plan</a>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Plan Name</th>
+            <th>Price</th>
+            <th>Duration</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Standard</td>
+            <td>₹2,999</td>
+            <td>30 days</td>
+            <td>Active</td>
+            <td>
+                <a href="/platform-admin/subscriptions/1/edit/">Edit</a> |
+                <a href="/platform-admin/subscriptions/1/delete/">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\platform_admin\templates\template_form.html ==========
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} | Super Admin{% endblock %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+<form>
+    <p>
+        <label for="name">Template Name</label><br>
+        <input type="text" id="name" name="name" required>
+    </p>
+
+    <p>
+        <label for="template_key">Template Key</label><br>
+        <input type="text" id="template_key" name="template_key"
+            placeholder="e.g. modern-care" required>
+    </p>
+
+    <p>
+        <label for="description">Description</label><br>
+        <textarea id="description" name="description" rows="4"></textarea>
+    </p>
+
+    <p>
+        <label for="template_path">Template Path</label><br>
+        <input type="text" id="template_path" name="template_path"
+            placeholder="e.g. hospital_site/modern/index.html" required>
+    </p>
+
+    <p>
+        <label for="preview_image">Preview Image</label><br>
+        <input type="file" id="preview_image" name="preview_image" accept="image/*">
+    </p>
+
+    <button type="button">{{ button_text }}</button>
+    <a href="/platform-admin/templates/">Cancel</a>
+</form>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\platform_admin\templates\template_list.html ==========
+
+{% extends "base.html" %}
+
+{% block title %}Hospital Templates | Super Admin{% endblock %}
+
+{% block content %}
+<h1>Hospital Website Templates</h1>
+<p>Manage the website designs available to registered hospitals.</p>
+
+<a href="/platform-admin/templates/add/">+ Add Template</a>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Template Name</th>
+            <th>Template Key</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Modern Care</td>
+            <td>modern-care</td>
+            <td>Clean and modern hospital website.</td>
+            <td>Active</td>
+            <td>
+                <a href="/platform-admin/templates/1/edit/">Edit</a> |
+                <a href="/platform-admin/templates/1/delete/">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\receptionist\templates\rec_appointments.html ==========
+{% extends "rec_base.html" %}
+
+{% block title %}Appointments | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Appointment Management</h1>
+
+<a href="/reception/appointments/add/">+ Schedule Appointment</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Sample Patient</td>
+            <td>Sample Doctor</td>
+            <td>Cardiology</td>
+            <td>--</td>
+            <td>--</td>
+            <td>Pending</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\receptionist\templates\rec_appointment_form.html ==========
+{% extends "rec_base.html" %}
+
+{% block title %}Schedule Appointment | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Schedule Appointment</h1>
+
+<form>
+    <label>Patient</label>
+    <select name="patient">
+        <option value="">Select Patient</option>
+        <option value="1">Sample Patient</option>
+    </select>
+
+    <br><br>
+
+    <label>Doctor</label>
+    <select name="doctor">
+        <option value="">Select Doctor</option>
+        <option value="1">Sample Doctor</option>
+    </select>
+
+    <br><br>
+
+    <label>Department</label>
+    <select name="department">
+        <option value="">Select Department</option>
+        <option value="1">Cardiology</option>
+    </select>
+
+    <br><br>
+
+    <label>Date</label>
+    <input type="date" name="date">
+
+    <br><br>
+
+    <label>Time</label>
+    <input type="time" name="time">
+
+    <br><br>
+
+    <label>Reason</label>
+    <textarea name="reason"></textarea>
+
+    <br><br>
+
+    <button type="button">Schedule Appointment</button>
+</form>
+{% endblock %}
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\receptionist\templates\rec_base.html ==========
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Receptionist Panel{% endblock %}</title>
+</head>
+<body>
+
+    <aside>
+        <h2>Hospital SaaS</h2>
+        <p>Receptionist Panel</p>
+
+        <nav>
+            <ul>
+                <li><a href="/reception/">Dashboard</a></li>
+                <li><a href="/reception/patients/">Patients</a></li>
+                <li><a href="/reception/appointments/">Appointments</a></li>
+                <li><a href="/reception/billing/">Billing & Invoices</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <header>
+        <h3>Reception Desk</h3>
+        <p>Manage patient registration and appointments</p>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\receptionist\templates\rec_billing.html ==========
+{% extends "rec_base.html" %}
+
+{% block title %}Billing | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Billing & Invoices</h1>
+<p>View invoices and track their payment status.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Invoice ID</th>
+            <th>Patient</th>
+            <th>Amount</th>
+            <th>Payment Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>INV001</td>
+            <td>Sample Patient</td>
+            <td>₹0.00</td>
+            <td>Pending</td>
+            <td><a href="/reception/billing/1/">View Invoice</a></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\receptionist\templates\rec_dashboard.html ==========
+{% extends "rec_base.html" %}
+
+{% block title %}Dashboard | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Receptionist Dashboard</h1>
+<p>Welcome to the Receptionist Panel.</p>
+
+<section>
+    <h3>Total Patients</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Today's Appointments</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Pending Appointments</h3>
+    <p>0</p>
+</section>
+
+<section>
+    <h3>Pending Invoices</h3>
+    <p>0</p>
+</section>
+
+<h2>Quick Actions</h2>
+<ul>
+    <li><a href="/reception/patients/add/">Register Patient</a></li>
+    <li><a href="/reception/appointments/add/">Schedule Appointment</a></li>
+    <li><a href="/reception/appointments/">View Appointments</a></li>
+    <li><a href="/reception/billing/">Manage Billing</a></li>
+</ul>
+{% endblock %}
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\receptionist\templates\rec_invoice_detail.html ==========
+{% extends "rec_base.html" %}
+
+{% block title %}Invoice Details | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Invoice Details</h1>
+
+<p>Invoice ID: {{ record_id }}</p>
+<p>Patient: Sample Patient</p>
+<p>Consultation Fee: ₹0.00</p>
+<p>Lab Fee: ₹0.00</p>
+<p>Other Charges: ₹0.00</p>
+<p>Total Amount: ₹0.00</p>
+<p>Payment Status: Pending</p>
+
+<button type="button">Mark as Paid</button>
+{% endblock %}
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\receptionist\templates\rec_patients.html ==========
+{% extends "rec_base.html" %}
+
+{% block title %}Patients | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Patient Management</h1>
+<p>Register patients and view their basic information.</p>
+
+<a href="/reception/patients/add/">+ Register Patient</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Patient ID</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>P001</td>
+            <td>Sample Patient</td>
+            <td>--</td>
+            <td>View</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\receptionist\templates\rec_patient_form.html ==========
+{% extends "rec_base.html" %}
+
+{% block title %}Register Patient | Receptionist{% endblock %}
+
+{% block content %}
+<h1>Register Patient</h1>
+
+<form>
+    <label>Full Name</label>
+    <input type="text" name="full_name">
+
+    <br><br>
+
+    <label>Email</label>
+    <input type="email" name="email">
+
+    <br><br>
+
+    <label>Contact Number</label>
+    <input type="tel" name="contact_number">
+
+    <br><br>
+
+    <label>Date of Birth</label>
+    <input type="date" name="date_of_birth">
+
+    <br><br>
+
+    <label>Gender</label>
+    <select name="gender">
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select>
+
+    <br><br>
+
+    <label>Address</label>
+    <textarea name="address"></textarea>
+
+    <br><br>
+
+    <button type="button">Register Patient</button>
+</form>
+{% endblock %}
+
+========== C:\Users\Anand Suresh\OneDrive\Desktop\Django\hpsaas\website\templates\home.html ==========
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management SaaS</title>
+</head>
+<body>
+
+    <h1>Hospital Management SaaS</h1>
+
+    <a href="/login/">Login</a>
+
+</body>
+</html>
+

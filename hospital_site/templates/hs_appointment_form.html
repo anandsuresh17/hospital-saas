@@ -1,0 +1,41 @@
+
+{% extends 'hs_base.html' %}
+
+{% block title %}Book Appointment | Hospital{% endblock %}
+
+{% block content %}
+<h2>Request an Appointment</h2>
+<p>Log in to your patient account before submitting your appointment request.</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label for="department">Department</label><br>
+    <select id="department" name="department" required>
+        <option value="">Select Department</option>
+        <option value="cardiology">Cardiology</option>
+        <option value="general-medicine">General Medicine</option>
+        <option value="orthopedics">Orthopedics</option>
+        <option value="pediatrics">Pediatrics</option>
+    </select><br><br>
+
+    <label for="doctor">Doctor</label><br>
+    <select id="doctor" name="doctor" required>
+        <option value="">Select Doctor</option>
+        <option value="doctor-1">Dr. Arun Kumar</option>
+        <option value="doctor-2">Dr. Meera Nair</option>
+        <option value="doctor-3">Dr. Rahul Menon</option>
+    </select><br><br>
+
+    <label for="date">Preferred Date</label><br>
+    <input type="date" id="date" name="date" required><br><br>
+
+    <label for="time">Preferred Time</label><br>
+    <input type="time" id="time" name="time" required><br><br>
+
+    <label for="reason">Reason for Visit</label><br>
+    <textarea id="reason" name="reason" rows="4"></textarea><br><br>
+
+    <button type="submit">Submit Appointment Request</button>
+</form>
+{% endblock %}

@@ -1,0 +1,38 @@
+
+{% extends 'hs_base.html' %}
+
+{% block title %}Departments | Hospital{% endblock %}
+
+{% block content %}
+<h2>Departments and Services</h2>
+<p>Explore our medical departments and healthcare services.</p>
+
+<section>
+    <h3>General Medicine</h3>
+    <p>Consultations for common illnesses, preventive care, and general health concerns.</p>
+</section>
+
+<section>
+    <h3>Cardiology</h3>
+    <p>Assessment and management of heart-related conditions.</p>
+</section>
+
+<section>
+    <h3>Orthopedics</h3>
+    <p>Care for bone, joint, and musculoskeletal conditions.</p>
+</section>
+
+<section>
+    <h3>Pediatrics</h3>
+    <p>Healthcare services for infants, children, and adolescents.</p>
+</section>
+
+<section>
+    <h3>Laboratory Services</h3>
+    <p>Diagnostic testing to support medical assessment and treatment.</p>
+</section>
+
+<p>
+    <a href="{% url 'hospital_site_doctors' hospital_slug=hospital_slug %}">View Our Doctors</a>
+</p>
+{% endblock %}

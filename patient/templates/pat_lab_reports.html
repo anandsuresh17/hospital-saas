@@ -1,0 +1,39 @@
+
+{% extends 'pat_base.html' %}
+
+{% block title %}Lab Reports{% endblock %}
+{% block page_heading %}Lab Reports{% endblock %}
+
+{% block content %}
+<h2>My Laboratory Reports</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Test Name</th>
+            <th>Date</th>
+            <th>Requested By</th>
+            <th>Result Summary</th>
+            <th>Report File</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Complete Blood Count</td>
+            <td>12-10-2026</td>
+            <td>Dr. Meera Nair</td>
+            <td>Sample result</td>
+            <td><a href="#">View Report</a></td>
+        </tr>
+        <tr>
+            <td>Blood Sugar</td>
+            <td>12-10-2026</td>
+            <td>Dr. Meera Nair</td>
+            <td>Sample result</td>
+            <td><a href="#">View Report</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Your actual report files will be displayed here when uploaded by authorized hospital staff.</p>
+{% endblock %}

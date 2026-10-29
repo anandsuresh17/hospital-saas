@@ -1,0 +1,43 @@
+
+{% extends 'pat_base.html' %}
+
+{% block title %}Book Appointment{% endblock %}
+{% block page_heading %}Book Appointment{% endblock %}
+
+{% block content %}
+<h2>Request a New Appointment</h2>
+<p>Your appointment request will be saved as Pending until the hospital confirms it.</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Department</label><br>
+    <select name="department" required>
+        <option value="">Select Department</option>
+        <option>Cardiology</option>
+        <option>General Medicine</option>
+        <option>Orthopedics</option>
+        <option>Dermatology</option>
+        <option>Pediatrics</option>
+    </select><br><br>
+
+    <label>Doctor</label><br>
+    <select name="doctor" required>
+        <option value="">Select Doctor</option>
+        <option>Dr. Arun Kumar</option>
+        <option>Dr. Meera Nair</option>
+        <option>Dr. Rahul Menon</option>
+    </select><br><br>
+
+    <label>Preferred Date</label><br>
+    <input type="date" name="date" required><br><br>
+
+    <label>Preferred Time</label><br>
+    <input type="time" name="time" required><br><br>
+
+    <label>Reason for Visit</label><br>
+    <textarea name="reason" rows="4" placeholder="Briefly describe your concern"></textarea><br><br>
+
+    <button type="submit">Submit Appointment Request</button>
+</form>
+{% endblock %}

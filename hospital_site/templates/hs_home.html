@@ -1,0 +1,32 @@
+
+{% extends 'hs_base.html' %}
+
+{% block title %}Home | Hospital{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Welcome to {{ hospital_slug|title }} Hospital</h2>
+    <p>Providing quality healthcare with compassion, expertise, and modern medical facilities.</p>
+    <p>
+        <a href="{% url 'hospital_site_doctors' hospital_slug=hospital_slug %}">Meet Our Doctors</a>
+        |
+        <a href="{% url 'hospital_site_appointment' hospital_slug=hospital_slug %}">Book an Appointment</a>
+    </p>
+</section>
+
+<section>
+    <h2>Our Healthcare Services</h2>
+    <ul>
+        <li>General Medicine</li>
+        <li>Cardiology</li>
+        <li>Orthopedics</li>
+        <li>Pediatrics</li>
+        <li>Diagnostic and Laboratory Services</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Why Choose Us?</h2>
+    <p>Experienced medical professionals, patient-focused care, and modern healthcare facilities.</p>
+</section>
+{% endblock %}

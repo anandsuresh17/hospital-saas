@@ -1,0 +1,37 @@
+
+{% extends 'hs_base.html' %}
+
+{% block title %}Our Doctors | Hospital{% endblock %}
+
+{% block content %}
+<h2>Meet Our Doctors</h2>
+<p>Explore our medical team and their areas of specialization.</p>
+
+<section>
+    <h3>Dr. Arun Kumar</h3>
+    <p>Department: Cardiology</p>
+    <p>Qualification: MBBS, MD</p>
+    <p>Specialization: Heart health</p>
+    <a href="{% url 'hospital_site_appointment' hospital_slug=hospital_slug %}">Request Appointment</a>
+</section>
+
+<hr>
+
+<section>
+    <h3>Dr. Meera Nair</h3>
+    <p>Department: General Medicine</p>
+    <p>Qualification: MBBS, MD</p>
+    <p>Specialization: General healthcare</p>
+    <a href="{% url 'hospital_site_appointment' hospital_slug=hospital_slug %}">Request Appointment</a>
+</section>
+
+<hr>
+
+<section>
+    <h3>Dr. Rahul Menon</h3>
+    <p>Department: Orthopedics</p>
+    <p>Qualification: MBBS, MS</p>
+    <p>Specialization: Bone and joint care</p>
+    <a href="{% url 'hospital_site_appointment' hospital_slug=hospital_slug %}">Request Appointment</a>
+</section>
+{% endblock %}

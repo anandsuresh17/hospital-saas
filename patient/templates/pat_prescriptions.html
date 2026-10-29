@@ -1,0 +1,36 @@
+
+{% extends 'pat_base.html' %}
+
+{% block title %}My Prescriptions{% endblock %}
+{% block page_heading %}Prescriptions{% endblock %}
+
+{% block content %}
+<h2>My Prescriptions</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Doctor</th>
+            <th>Medicine</th>
+            <th>Dosage</th>
+            <th>Frequency</th>
+            <th>Duration</th>
+            <th>Instructions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>15-10-2026</td>
+            <td>Dr. Rahul Menon</td>
+            <td>Sample Medicine A</td>
+            <td>As prescribed</td>
+            <td>As prescribed</td>
+            <td>5 days</td>
+            <td>Follow the doctor's instructions</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>These are sample entries for layout testing. Actual prescriptions will be entered by your doctor.</p>
+{% endblock %}

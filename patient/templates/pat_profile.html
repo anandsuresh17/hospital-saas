@@ -1,0 +1,54 @@
+
+{% extends 'pat_base.html' %}
+
+{% block title %}My Profile{% endblock %}
+{% block page_heading %}My Profile{% endblock %}
+
+{% block content %}
+<h2>Personal Information</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Full Name</label><br>
+    <input type="text" name="full_name" value="Sample Patient"><br><br>
+
+    <label>Email Address</label><br>
+    <input type="email" name="email" value="patient@example.com"><br><br>
+
+    <label>Date of Birth</label><br>
+    <input type="date" name="dob"><br><br>
+
+    <label>Gender</label><br>
+    <select name="gender">
+        <option value="">Select Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+    </select><br><br>
+
+    <label>Contact Number</label><br>
+    <input type="tel" name="contact_number"><br><br>
+
+    <label>Blood Group</label><br>
+    <select name="blood_group">
+        <option value="">Select Blood Group</option>
+        <option>A+</option>
+        <option>A-</option>
+        <option>B+</option>
+        <option>B-</option>
+        <option>AB+</option>
+        <option>AB-</option>
+        <option>O+</option>
+        <option>O-</option>
+    </select><br><br>
+
+    <label>Address</label><br>
+    <textarea name="address" rows="4"></textarea><br><br>
+
+    <label>Emergency Contact</label><br>
+    <input type="tel" name="emergency_contact"><br><br>
+
+    <button type="submit">Update Profile</button>
+</form>
+{% endblock %}

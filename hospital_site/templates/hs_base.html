@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hospital Website{% endblock %}</title>
+</head>
+<body>
+
+    <header>
+        <h1>{% block hospital_name %}City Care Hospital{% endblock %}</h1>
+        <p>Your Health, Our Priority</p>
+
+        <nav>
+            <a href="{% url 'hospital_site_home' hospital_slug=hospital_slug %}">Home</a> |
+            <a href="{% url 'hospital_site_about' hospital_slug=hospital_slug %}">About Us</a> |
+            <a href="{% url 'hospital_site_departments' hospital_slug=hospital_slug %}">Departments</a> |
+            <a href="{% url 'hospital_site_doctors' hospital_slug=hospital_slug %}">Our Doctors</a> |
+            <a href="{% url 'hospital_site_contact' hospital_slug=hospital_slug %}">Contact Us</a>
+        </nav>
+
+        <p>
+            <a href="{% url 'hospital_site_appointment' hospital_slug=hospital_slug %}">Book Appointment</a>
+        </p>
+    </header>
+
+    <hr>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>&copy; 2026 City Care Hospital. All rights reserved.</p>
+        <p>For emergencies, contact your local emergency services.</p>
+    </footer>
+
+</body>
+</html>
