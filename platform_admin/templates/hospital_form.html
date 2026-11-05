@@ -4,55 +4,66 @@
 {% block title %}{{ page_title }} | Super Admin{% endblock %}
 
 {% block content %}
+
 <h1>{{ page_title }}</h1>
 
-<form>
+<form method="POST">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
     <p>
-        <label for="name">Hospital Name</label><br>
-        <input type="text" id="name" name="name" required>
+        <label for="{{ form.name.id_for_label }}">Hospital Name</label><br>
+        {{ form.name }}
+        {{ form.name.errors }}
     </p>
 
     <p>
-        <label for="email">Email Address</label><br>
-        <input type="email" id="email" name="email" required>
+        <label for="{{ form.email.id_for_label }}">Email Address</label><br>
+        {{ form.email }}
+        {{ form.email.errors }}
     </p>
 
     <p>
-        <label for="contact_number">Contact Number</label><br>
-        <input type="tel" id="contact_number" name="contact_number">
+        <label for="{{ form.contact_number.id_for_label }}">Contact Number</label><br>
+        {{ form.contact_number }}
+        {{ form.contact_number.errors }}
     </p>
 
     <p>
-        <label for="address">Address</label><br>
-        <textarea id="address" name="address" rows="4"></textarea>
+        <label for="{{ form.address.id_for_label }}">Address</label><br>
+        {{ form.address }}
+        {{ form.address.errors }}
     </p>
 
     <p>
-        <label for="website">Website</label><br>
-        <input type="url" id="website" name="website">
+        <label for="{{ form.website.id_for_label }}">Website</label><br>
+        {{ form.website }}
+        {{ form.website.errors }}
     </p>
 
     <p>
-        <label for="subscription">Subscription Plan</label><br>
-        <select id="subscription" name="subscription">
-            <option value="">Select a plan</option>
-            <option value="basic">Basic</option>
-            <option value="standard">Standard</option>
-            <option value="premium">Premium</option>
-        </select>
+        <label for="{{ form.subscription_plan.id_for_label }}">Subscription Plan</label><br>
+        {{ form.subscription_plan }}
+        {{ form.subscription_plan.errors }}
     </p>
 
     <p>
-        <label for="template">Website Template</label><br>
-        <select id="template" name="template">
-            <option value="">Select a template</option>
-            <option value="1">Modern Care</option>
-            <option value="2">Classic Hospital</option>
-            <option value="3">Advanced Medical</option>
-        </select>
+        <label for="{{ form.template.id_for_label }}">Website Template</label><br>
+        {{ form.template }}
+        {{ form.template.errors }}
     </p>
 
-    <button type="button">{{ button_text }}</button>
-    <a href="/platform-admin/hospitals/">Cancel</a>
+    <p>
+        <label for="{{ form.is_active.id_for_label }}">Active Status</label><br>
+        {{ form.is_active }}
+        {{ form.is_active.errors }}
+    </p>
+
+    <button type="submit">{{ button_text }}</button>
+
+    <a href="{% url 'hospital_list' %}">Cancel</a>
+
 </form>
+
 {% endblock %}

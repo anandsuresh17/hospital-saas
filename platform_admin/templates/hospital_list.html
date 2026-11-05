@@ -4,12 +4,15 @@
 {% block title %}Hospitals | Super Admin{% endblock %}
 
 {% block content %}
+
 <h1>Hospital Management</h1>
+
 <p>View and manage hospitals registered on the platform.</p>
 
-<a href="/platform-admin/hospitals/add/">+ Register Hospital</a>
+<a href="{% url 'hospital_create' %}">+ Register Hospital</a>
 
 <table border="1" cellpadding="10">
+
     <thead>
         <tr>
             <th>ID</th>
@@ -20,18 +23,55 @@
             <th>Actions</th>
         </tr>
     </thead>
+
     <tbody>
+
+        {% for hospital in hospitals %}
+
         <tr>
-            <td>1</td>
-            <td>City Care Hospital</td>
-            <td>citycare@example.com</td>
-            <td>Standard</td>
-            <td>Active</td>
+            <td>{{ hospital.id }}</td>
+
+            <td>{{ hospital.name }}</td>
+
+            <td>{{ hospital.email }}</td>
+
+            <td>{{ hospital.subscription_plan.name }}</td>
+
             <td>
-                <a href="/platform-admin/hospitals/1/edit/">Edit</a> |
-                <a href="/platform-admin/hospitals/1/delete/">Delete</a>
+                {% if hospital.is_active %}
+                    Active
+                {% else %}
+                    Inactive
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="{% url 'hospital_update' hospital.id %}">Edit</a>
+
+                |
+
+                {% if hospital.is_active %}
+                    <a href="{% url 'hospital_delete' hospital.id %}">
+                        Deactivate
+                    </a>
+                {% else %}
+                    <a href="{% url 'hospital_activate' hospital.id %}">
+                        Activate
+                    </a>
+                {% endif %}
             </td>
         </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="6">No hospitals registered yet.</td>
+        </tr>
+
+        {% endfor %}
+
     </tbody>
+
 </table>
+
 {% endblock %}

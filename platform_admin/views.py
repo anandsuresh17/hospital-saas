@@ -1,5 +1,8 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+
+from .models import Hospital
+from .forms import HospitalForm
 
 
 # Dashboard
@@ -9,28 +12,78 @@ def dashboard(request):
 
 # Hospital Management
 def hospital_list(request):
-    return render(request, "hospital_list.html")
+    hospitals = Hospital.objects.all()
+
+    return render(request, "hospital_list.html", {
+        "hospitals": hospitals,
+    })
 
 
 def hospital_create(request):
+    if request.method == "POST":
+        form = HospitalForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect("hospital_list")
+
+    else:
+        form = HospitalForm()
+
     return render(request, "hospital_form.html", {
+        "form": form,
         "page_title": "Add Hospital",
         "button_text": "Create Hospital",
     })
 
 
 def hospital_update(request, pk):
+    hospital = get_object_or_404(Hospital, pk=pk)
+
+    if request.method == "POST":
+        form = HospitalForm(request.POST, instance=hospital)
+
+        if form.is_valid():
+            form.save()
+            return redirect("hospital_list")
+
+    else:
+        form = HospitalForm(instance=hospital)
+
     return render(request, "hospital_form.html", {
+        "form": form,
         "page_title": "Edit Hospital",
         "button_text": "Save Changes",
-        "record_id": pk,
     })
 
 
+# Deactivate Hospital
 def hospital_delete(request, pk):
+    hospital = get_object_or_404(Hospital, pk=pk)
+
+    if request.method == "POST":
+        hospital.is_active = False
+        hospital.save()
+        return redirect("hospital_list")
+
     return render(request, "hospital_confirm_delete.html", {
-        "page_title": "Delete Hospital",
-        "record_id": pk,
+        "hospital": hospital,
+        "page_title": "Deactivate Hospital",
+    })
+
+
+# Activate Hospital
+def hospital_activate(request, pk):
+    hospital = get_object_or_404(Hospital, pk=pk)
+
+    if request.method == "POST":
+        hospital.is_active = True
+        hospital.save()
+        return redirect("hospital_list")
+
+    return render(request, "hospital_activate.html", {
+        "hospital": hospital,
+        "page_title": "Activate Hospital",
     })
 
 

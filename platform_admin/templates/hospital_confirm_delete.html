@@ -1,16 +1,25 @@
 
 {% extends "base.html" %}
 
-{% block title %}{{ page_title }} | Super Admin{% endblock %}
+{% block title %}Deactivate Hospital | Super Admin{% endblock %}
 
 {% block content %}
-<h1>{{ page_title }}</h1>
 
-<p>Are you sure you want to proceed with this action?</p>
-<p>Record ID: {{ record_id }}</p>
+<h1>Deactivate Hospital</h1>
 
-<p>This is a preview only. No record will be deleted.</p>
+<p>
+    Are you sure you want to deactivate
+    <strong>{{ hospital.name }}</strong>?
+</p>
 
-<button type="button" disabled>Confirm Delete</button>
-<a href="/platform-admin/">Cancel</a>
+<p>The hospital's records will remain safe in the database.</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <button type="submit">Yes, Deactivate Hospital</button>
+
+    <a href="{% url 'hospital_list' %}">Cancel</a>
+</form>
+
 {% endblock %}

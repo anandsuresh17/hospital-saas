@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+
+{% block title %}Activate Hospital | Super Admin{% endblock %}
+
+{% block content %}
+
+<h1>Activate Hospital</h1>
+
+<p>
+    Are you sure you want to activate
+    <strong>{{ hospital.name }}</strong>?
+</p>
+
+<p>The hospital will become active again.</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <button type="submit">Yes, Activate Hospital</button>
+
+    <a href="{% url 'hospital_list' %}">Cancel</a>
+</form>
+
+{% endblock %}
