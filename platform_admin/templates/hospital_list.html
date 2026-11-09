@@ -9,9 +9,13 @@
 
 <p>View and manage hospitals registered on the platform.</p>
 
-<a href="{% url 'hospital_create' %}">+ Register Hospital</a>
+<a href="{% url 'hospital_create' %}">
+    + Register Hospital
+</a>
 
-<table border="1" cellpadding="10">
+<hr>
+
+<table border="1" cellpadding="10" cellspacing="0" width="100%">
 
     <thead>
         <tr>
@@ -19,6 +23,8 @@
             <th>Hospital Name</th>
             <th>Email</th>
             <th>Subscription</th>
+            <th>Website Template</th>
+            <th>Preview</th>
             <th>Status</th>
             <th>Actions</th>
         </tr>
@@ -37,6 +43,22 @@
 
             <td>{{ hospital.subscription_plan.name }}</td>
 
+            <td>{{ hospital.template.name }}</td>
+
+            <td>
+                {% if hospital.template.preview_image %}
+                    <img
+                        src="{{ hospital.template.preview_image.url }}"
+                        alt="{{ hospital.template.name }}"
+                        width="100"
+                        height="70"
+                        style="object-fit: cover;"
+                    >
+                {% else %}
+                    No Preview
+                {% endif %}
+            </td>
+
             <td>
                 {% if hospital.is_active %}
                     Active
@@ -46,7 +68,9 @@
             </td>
 
             <td>
-                <a href="{% url 'hospital_update' hospital.id %}">Edit</a>
+                <a href="{% url 'hospital_update' hospital.id %}">
+                    Edit
+                </a>
 
                 |
 
@@ -65,7 +89,7 @@
         {% empty %}
 
         <tr>
-            <td colspan="6">No hospitals registered yet.</td>
+            <td colspan="8">No hospitals registered yet.</td>
         </tr>
 
         {% endfor %}

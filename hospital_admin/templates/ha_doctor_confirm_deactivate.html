@@ -1,0 +1,22 @@
+{% extends "ha_base.html" %}
+
+{% block title %}Deactivate Doctor{% endblock %}
+
+{% block content %}
+
+<h1>Deactivate Doctor</h1>
+
+<p>
+    Are you sure you want to deactivate
+    <strong>{{ doctor.user.username }}</strong>?
+</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <button type="submit">Yes, Deactivate</button>
+
+    <a href="{% url 'ha_doctors' %}">Cancel</a>
+</form>
+
+{% endblock %}

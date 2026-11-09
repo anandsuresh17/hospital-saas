@@ -4,34 +4,91 @@
 {% block title %}Hospital Templates | Super Admin{% endblock %}
 
 {% block content %}
-<h1>Hospital Website Templates</h1>
-<p>Manage the website designs available to registered hospitals.</p>
 
-<a href="/platform-admin/templates/add/">+ Add Template</a>
+<h1>Hospital Template Management</h1>
 
-<table border="1" cellpadding="10">
+<p>Manage website templates available for hospitals.</p>
+
+<a href="{% url 'template_create' %}">
+    + Add New Template
+</a>
+
+<hr>
+
+<table border="1" cellpadding="10" cellspacing="0" width="100%">
+
     <thead>
         <tr>
             <th>ID</th>
+            <th>Preview</th>
             <th>Template Name</th>
             <th>Template Key</th>
-            <th>Description</th>
+            <th>Template Path</th>
             <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>
+
     <tbody>
+
+        {% for template in templates %}
+
         <tr>
-            <td>1</td>
-            <td>Modern Care</td>
-            <td>modern-care</td>
-            <td>Clean and modern hospital website.</td>
-            <td>Active</td>
+            <td>{{ template.id }}</td>
+
             <td>
-                <a href="/platform-admin/templates/1/edit/">Edit</a> |
-                <a href="/platform-admin/templates/1/delete/">Delete</a>
+                {% if template.preview_image %}
+                    <img src="{{ template.preview_image.url }}"
+                         alt="{{ template.name }}"
+                         width="100"
+                         height="70"
+                         style="object-fit: cover;">
+                {% else %}
+                    No Preview
+                {% endif %}
+            </td>
+
+            <td>{{ template.name }}</td>
+            <td>{{ template.template_key }}</td>
+            <td>{{ template.template_path }}</td>
+
+            <td>
+                {% if template.is_active %}
+                    Active
+                {% else %}
+                    Inactive
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="{% url 'template_update' template.id %}">
+                    Edit
+                </a>
+
+                |
+
+                {% if template.is_active %}
+                    <a href="{% url 'template_delete' template.id %}">
+                        Deactivate
+                    </a>
+                {% else %}
+                    <a href="{% url 'template_activate' template.id %}">
+                        Activate
+                    </a>
+                {% endif %}
             </td>
         </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="7">No hospital templates available.</td>
+        </tr>
+
+        {% endfor %}
+
     </tbody>
+
 </table>
+
 {% endblock %}

@@ -1,18 +1,84 @@
-
 {% extends "ha_base.html" %}
-{% block title %}Doctors | Hospital Admin{% endblock %}
-{% block content %}
-<h1>Doctor Management</h1>
-<p>Manage doctors working at your hospital.</p>
-<button type="button">+ Add Doctor</button>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th><th>Doctor Name</th><th>Specialization</th><th>Department</th><th>Status</th><th>Actions</th>
-    </tr>
-    <tr>
-        <td>1</td><td>Dr. Sample</td><td>Cardiology</td><td>Cardiology</td><td>Active</td>
-        <td>Edit | View</td>
-    </tr>
+{% block title %}Doctors | Hospital Admin{% endblock %}
+
+{% block content %}
+
+<h1>Doctor Management</h1>
+
+<p>Manage doctors within your hospital.</p>
+
+<a href="{% url 'ha_doctor_create' %}">
+    <button type="button">+ Add Doctor</button>
+</a>
+
+<hr>
+
+<table border="1" cellpadding="10" cellspacing="0">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Doctor Name</th>
+            <th>Username</th>
+            <th>Department</th>
+            <th>Qualification</th>
+            <th>Specialization</th>
+            <th>Experience</th>
+            <th>Consultation Fee</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for doctor in doctors %}
+
+        <tr>
+            <td>{{ doctor.id }}</td>
+            <td>{{ doctor.user.get_full_name|default:doctor.user.username }}</td>
+            <td>{{ doctor.user.username }}</td>
+            <td>{{ doctor.department.name }}</td>
+            <td>{{ doctor.qualification }}</td>
+            <td>{{ doctor.specialization|default:"-" }}</td>
+            <td>{{ doctor.experience_years }} years</td>
+            <td>{{ doctor.consultation_fee }}</td>
+
+            <td>
+                {% if doctor.user.is_active %}
+                    Active
+                {% else %}
+                    Inactive
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="{% url 'ha_doctor_update' doctor.id %}">Edit</a>
+                |
+
+                {% if doctor.user.is_active %}
+                    <a href="{% url 'ha_doctor_deactivate' doctor.id %}">
+                        Deactivate
+                    </a>
+                {% else %}
+                    <a href="{% url 'ha_doctor_activate' doctor.id %}">
+                        Activate
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="10">No doctors available.</td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
 </table>
+
 {% endblock %}

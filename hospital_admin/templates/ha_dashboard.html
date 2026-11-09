@@ -4,34 +4,49 @@
 {% block title %}Dashboard | Hospital Admin{% endblock %}
 
 {% block content %}
-<h1>Hospital Dashboard</h1>
+
+<h1>{{ hospital.name }} Dashboard</h1>
+
 <p>Welcome to the Hospital Admin panel.</p>
+
+<p>
+    <strong>Website Template:</strong>
+    {{ hospital.template.name }}
+</p>
 
 <section>
     <h3>Total Departments</h3>
-    <p>0</p>
+    <p>{{ total_departments }}</p>
 </section>
 
 <section>
     <h3>Total Doctors</h3>
-    <p>0</p>
+    <p>{{ total_doctors }}</p>
+</section>
+
+<section>
+    <h3>Total Receptionists</h3>
+    <p>{{ total_receptionists }}</p>
 </section>
 
 <section>
     <h3>Total Patients</h3>
-    <p>0</p>
+    <p>{{ total_patients }}</p>
 </section>
 
 <section>
-    <h3>Appointments</h3>
-    <p>0</p>
+    <h3>Total Appointments</h3>
+    <p>{{ total_appointments }}</p>
 </section>
 
 <h2>Quick Actions</h2>
+
 <ul>
     <li><a href="/hospital-admin/departments/">Manage Departments</a></li>
     <li><a href="/hospital-admin/doctors/">Manage Doctors</a></li>
+    <li><a href="/hospital-admin/receptionists/">Manage Receptionists</a></li>
     <li><a href="/hospital-admin/patients/">View Patients</a></li>
     <li><a href="/hospital-admin/appointments/">View Appointments</a></li>
 </ul>
+
 {% endblock %}

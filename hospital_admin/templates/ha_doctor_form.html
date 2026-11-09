@@ -1,0 +1,25 @@
+{% extends "ha_base.html" %}
+
+{% block title %}Doctor Form | Hospital Admin{% endblock %}
+
+{% block content %}
+
+{% if doctor %}
+    <h1>Edit Doctor</h1>
+{% else %}
+    <h1>Add Doctor</h1>
+{% endif %}
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Save Doctor</button>
+
+    <a href="{% url 'ha_doctors' %}">Cancel</a>
+
+</form>
+
+{% endblock %}

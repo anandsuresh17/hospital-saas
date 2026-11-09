@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+
+{% block title %}Activate Subscription Plan | Super Admin{% endblock %}
+
+{% block content %}
+
+<h1>Activate Subscription Plan</h1>
+
+<p>
+    Are you sure you want to activate
+    <strong>{{ plan.name }}</strong>?
+</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <button type="submit">Yes, Activate Plan</button>
+
+    <a href="{% url 'subscription_list' %}">Cancel</a>
+</form>
+
+{% endblock %}

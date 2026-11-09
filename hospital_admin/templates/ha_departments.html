@@ -1,18 +1,77 @@
-
 {% extends "ha_base.html" %}
-{% block title %}Departments | Hospital Admin{% endblock %}
-{% block content %}
-<h1>Department Management</h1>
-<p>Manage departments within your hospital.</p>
-<button type="button">+ Add Department</button>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th><th>Department Name</th><th>Description</th><th>Status</th><th>Actions</th>
-    </tr>
-    <tr>
-        <td>1</td><td>Cardiology</td><td>Heart care</td><td>Active</td>
-        <td>Edit | Delete</td>
-    </tr>
+{% block title %}Departments | Hospital Admin{% endblock %}
+
+{% block content %}
+
+<h1>Department Management</h1>
+
+<p>Manage departments within your hospital.</p>
+
+<a href="{% url 'ha_department_create' %}">
+    <button type="button">+ Add Department</button>
+</a>
+
+<hr>
+
+<table border="1" cellpadding="10" cellspacing="0">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Department Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for department in departments %}
+
+        <tr>
+            <td>{{ department.id }}</td>
+            <td>{{ department.name }}</td>
+            <td>{{ department.description|default:"-" }}</td>
+
+            <td>
+                {% if department.is_active %}
+                    Active
+                {% else %}
+                    Inactive
+                {% endif %}
+            </td>
+
+            <td>
+              <td>
+    <a href="{% url 'ha_department_update' department.id %}">Edit</a>
+    |
+
+    {% if department.is_active %}
+        <a href="{% url 'ha_department_deactivate' department.id %}">
+            Deactivate
+        </a>
+    {% else %}
+        <a href="{% url 'ha_department_activate' department.id %}">
+            Activate
+        </a>
+    {% endif %}
+</td>
+
+            </td>
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="5">No departments available.</td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
 </table>
+
 {% endblock %}

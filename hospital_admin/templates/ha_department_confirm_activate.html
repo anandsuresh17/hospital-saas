@@ -1,0 +1,22 @@
+{% extends "ha_base.html" %}
+
+{% block title %}Activate Department | Hospital Admin{% endblock %}
+
+{% block content %}
+
+<h1>Activate Department</h1>
+
+<p>
+    Are you sure you want to activate
+    <strong>{{ department.name }}</strong>?
+</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <button type="submit">Yes, Activate</button>
+
+    <a href="{% url 'ha_departments' %}">Cancel</a>
+</form>
+
+{% endblock %}

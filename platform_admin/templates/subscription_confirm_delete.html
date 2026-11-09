@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+
+{% block title %}Deactivate Subscription Plan | Super Admin{% endblock %}
+
+{% block content %}
+
+<h1>Deactivate Subscription Plan</h1>
+
+<p>
+    Are you sure you want to deactivate
+    <strong>{{ plan.name }}</strong>?
+</p>
+
+<p>Existing hospital subscriptions will remain unchanged.</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <button type="submit">Yes, Deactivate Plan</button>
+
+    <a href="{% url 'subscription_list' %}">Cancel</a>
+</form>
+
+{% endblock %}

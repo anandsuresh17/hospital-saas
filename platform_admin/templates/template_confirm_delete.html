@@ -1,0 +1,25 @@
+
+{% extends "base.html" %}
+
+{% block title %}Deactivate Template | Super Admin{% endblock %}
+
+{% block content %}
+
+<h1>Deactivate Hospital Template</h1>
+
+<p>
+    Are you sure you want to deactivate
+    <strong>{{ template.name }}</strong>?
+</p>
+
+<p>Existing hospitals using this template will retain their assigned template.</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <button type="submit">Yes, Deactivate Template</button>
+
+    <a href="{% url 'template_list' %}">Cancel</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "ha_base.html" %}
+
+{% block title %}Deactivate Department | Hospital Admin{% endblock %}
+
+{% block content %}
+
+<h1>Deactivate Department</h1>
+
+<p>
+    Are you sure you want to deactivate
+    <strong>{{ department.name }}</strong>?
+</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <button type="submit">Yes, Deactivate</button>
+
+    <a href="{% url 'ha_departments' %}">Cancel</a>
+</form>
+
+{% endblock %}
