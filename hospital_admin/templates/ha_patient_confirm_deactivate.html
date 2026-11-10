@@ -1,0 +1,30 @@
+
+{% extends "ha_base.html" %}
+
+{% block title %}Deactivate Patient{% endblock %}
+
+{% block content %}
+
+<h1>Deactivate Patient Registration</h1>
+
+<p>
+    Are you sure you want to deactivate the hospital registration for
+    <strong>{{ hospital_patient.patient.user.username }}</strong>?
+</p>
+
+<p>
+    This will not delete the patient or deactivate their account
+    at other hospitals.
+</p>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <button type="submit">Yes, Deactivate</button>
+
+    <a href="{% url 'ha_patients' %}">Cancel</a>
+
+</form>
+
+{% endblock %}

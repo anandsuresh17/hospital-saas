@@ -1,0 +1,123 @@
+
+{% extends "ha_base.html" %}
+
+{% block title %}Medical Record Details{% endblock %}
+
+{% block content %}
+
+<h1>Medical Record Details</h1>
+
+<a href="{% url 'ha_medical_records' %}">
+    Back to Medical Records
+</a>
+
+<hr>
+
+<h2>Record Information</h2>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Record ID</th>
+        <td>{{ record.id }}</td>
+    </tr>
+
+    <tr>
+        <th>Appointment Date</th>
+        <td>{{ record.appointment.date|date:"d M Y" }}</td>
+    </tr>
+
+    <tr>
+        <th>Appointment Time</th>
+        <td>{{ record.appointment.time|time:"h:i A" }}</td>
+    </tr>
+
+</table>
+
+<hr>
+
+<h2>Patient Information</h2>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Patient ID</th>
+        <td>{{ record.patient.patient_id_code }}</td>
+    </tr>
+
+    <tr>
+        <th>Patient Name</th>
+        <td>
+            {{ record.patient.patient.user.get_full_name|default:record.patient.patient.user.username }}
+        </td>
+    </tr>
+
+    <tr>
+        <th>Email</th>
+        <td>{{ record.patient.patient.user.email|default:"-" }}</td>
+    </tr>
+
+    <tr>
+        <th>Contact Number</th>
+        <td>{{ record.patient.patient.contact_number|default:"-" }}</td>
+    </tr>
+
+</table>
+
+<hr>
+
+<h2>Doctor Information</h2>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Doctor Name</th>
+        <td>
+            {{ record.doctor.user.get_full_name|default:record.doctor.user.username }}
+        </td>
+    </tr>
+
+    <tr>
+        <th>Department</th>
+        <td>{{ record.doctor.department.name }}</td>
+    </tr>
+
+    <tr>
+        <th>Specialization</th>
+        <td>{{ record.doctor.specialization|default:"-" }}</td>
+    </tr>
+
+</table>
+
+<hr>
+
+<h2>Clinical Information</h2>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Symptoms</th>
+        <td>{{ record.symptoms|default:"Not provided"|linebreaks }}</td>
+    </tr>
+
+    <tr>
+        <th>Diagnosis</th>
+        <td>{{ record.diagnosis|linebreaks }}</td>
+    </tr>
+
+    <tr>
+        <th>Doctor's Notes</th>
+        <td>{{ record.notes|default:"No additional notes"|linebreaks }}</td>
+    </tr>
+
+</table>
+
+<hr>
+
+<p>
+    <a href="{% url 'ha_medical_records' %}">
+        Back to Medical Records
+    </a>
+</p>
+
+{% endblock %}

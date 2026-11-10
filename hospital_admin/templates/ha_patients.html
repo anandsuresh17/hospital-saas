@@ -1,18 +1,262 @@
 
 {% extends "ha_base.html" %}
-{% block title %}Patients | Hospital Admin{% endblock %}
-{% block content %}
-<h1>Patient Management</h1>
-<p>View and manage patient registrations for your hospital.</p>
-<button type="button">+ Register Patient</button>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>Patient ID</th><th>Patient Name</th><th>Contact Number</th><th>Actions</th>
-    </tr>
-    <tr>
-        <td>P001</td><td>Sample Patient</td><td>0000000000</td>
-        <td>View Profile</td>
-    </tr>
-</table>
+{% block title %}Patient Management{% endblock %}
+
+{% block content %}
+
+<style>
+    .patient-table {
+        width: 100%;
+        border-collapse: collapse !important;
+        border: 1px solid #adb5bd !important;
+        background: #ffffff;
+    }
+
+    .patient-table th,
+    .patient-table td {
+        border: 1px solid #adb5bd !important;
+        padding: 12px 14px;
+        vertical-align: middle;
+    }
+
+    .patient-table thead th {
+        background-color: #f1f3f5;
+        color: #212529;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .patient-table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .patient-search-card,
+    .patient-list-card {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+    }
+
+    .patient-table .action-button {
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="container-fluid">
+
+    <!-- PAGE HEADER -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>Patient Management</h2>
+
+            <p class="text-muted mb-0">
+                View and manage registered patient profiles.
+            </p>
+        </div>
+
+        <div>
+            <span class="badge bg-primary fs-6">
+                Total Patients: {{ patients|length }}
+            </span>
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH SECTION -->
+
+    <div class="card shadow-sm patient-search-card mb-4">
+
+        <div class="card-body">
+
+            <form method="GET" action="{% url 'ha_patients' %}">
+
+                <div class="row align-items-end">
+
+                    <div class="col-md-8">
+
+                        <label class="form-label fw-semibold">
+                            Search Patients
+                        </label>
+
+                        <input
+                            type="text"
+                            name="q"
+                            class="form-control"
+                            placeholder="Search by patient name, username, email or contact number"
+                            value="{{ search_query }}"
+                        >
+
+                    </div>
+
+                    <div class="col-md-4 mt-3 mt-md-0">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            <i class="bi bi-search"></i>
+                            Search
+                        </button>
+
+                        <a
+                            href="{% url 'ha_patients' %}"
+                            class="btn btn-secondary"
+                        >
+                            Clear
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- PATIENT TABLE -->
+
+    <div class="card shadow-sm patient-list-card">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="mb-0">
+                Registered Patients
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="patient-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Patient Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Contact Number</th>
+                            <th>Gender</th>
+                            <th>Date of Birth</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for patient in patients %}
+
+                        <tr>
+
+                            <!-- PATIENT ID -->
+
+                            <td>
+                                {{ patient.id }}
+                            </td>
+
+
+                            <!-- PATIENT NAME -->
+
+                            <td>
+
+                                <strong>
+                                    {{ patient.user.get_full_name|default:patient.user.username }}
+                                </strong>
+
+                            </td>
+
+
+                            <!-- USERNAME -->
+
+                            <td>
+                                {{ patient.user.username }}
+                            </td>
+
+
+                            <!-- EMAIL -->
+
+                            <td>
+                                {{ patient.user.email|default:"-" }}
+                            </td>
+
+
+                            <!-- CONTACT NUMBER -->
+
+                            <td>
+                                {{ patient.contact_number|default:"-" }}
+                            </td>
+
+
+                            <!-- GENDER -->
+
+                            <td>
+                                {{ patient.gender|default:"-" }}
+                            </td>
+
+
+                            <!-- DATE OF BIRTH -->
+
+                            <td>
+                                {{ patient.date_of_birth|date:"d M Y"|default:"-" }}
+                            </td>
+
+
+                            <!-- ACTIONS -->
+
+                            <td>
+
+                                <a
+                                    href="{% url 'ha_patient_profile_detail' patient.pk %}"
+                                    class="btn btn-sm btn-primary action-button"
+                                >
+                                    <i class="bi bi-eye"></i>
+                                    View Details
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="8" class="text-center py-4">
+
+                                <p class="text-muted mb-0">
+                                    No patients found.
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 {% endblock %}

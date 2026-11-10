@@ -1,0 +1,25 @@
+
+{% extends "ha_base.html" %}
+
+{% block title %}Activate Patient{% endblock %}
+
+{% block content %}
+
+<h1>Activate Patient Registration</h1>
+
+<p>
+    Are you sure you want to activate the hospital registration for
+    <strong>{{ hospital_patient.patient.user.username }}</strong>?
+</p>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <button type="submit">Yes, Activate</button>
+
+    <a href="{% url 'ha_patients' %}">Cancel</a>
+
+</form>
+
+{% endblock %}

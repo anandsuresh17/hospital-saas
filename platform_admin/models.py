@@ -187,33 +187,40 @@ class Patient(models.Model):
 
 
 class HospitalPatient(models.Model):
+
     hospital = models.ForeignKey(
         Hospital,
         on_delete=models.CASCADE,
-        related_name="registered_patients",
+        related_name="registered_patients"
     )
+
     patient = models.ForeignKey(
         Patient,
         on_delete=models.CASCADE,
-        related_name="hospital_registrations",
+        related_name="hospital_registrations"
     )
+
     patient_id_code = models.CharField(max_length=50)
+
+    is_active = models.BooleanField(default=True)
+
     registered_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["hospital", "patient"],
-                name="unique_patient_registration_per_hospital",
+                fields=['hospital', 'patient'],
+                name='unique_patient_per_hospital'
             ),
             models.UniqueConstraint(
-                fields=["hospital", "patient_id_code"],
-                name="unique_patient_id_per_hospital",
+                fields=['hospital', 'patient_id_code'],
+                name='unique_patient_id_per_hospital'
             ),
         ]
 
     def __str__(self):
-        return f"{self.patient_id_code} - {self.hospital.name}"
+        return f"{self.patient.user.username} - {self.hospital.name}"
+
 
 
 class Receptionist(models.Model):

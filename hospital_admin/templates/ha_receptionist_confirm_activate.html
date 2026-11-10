@@ -1,0 +1,25 @@
+
+{% extends "ha_base.html" %}
+
+{% block title %}Activate Receptionist{% endblock %}
+
+{% block content %}
+
+<h1>Activate Receptionist</h1>
+
+<p>
+    Are you sure you want to activate
+    <strong>{{ receptionist.user.username }}</strong>?
+</p>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <button type="submit">Yes, Activate</button>
+
+    <a href="{% url 'ha_receptionists' %}">Cancel</a>
+
+</form>
+
+{% endblock %}

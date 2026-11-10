@@ -1,0 +1,498 @@
+
+{% extends "ha_base.html" %}
+
+{% block title %}Patient Details{% endblock %}
+
+{% block content %}
+
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 25px;
+    }
+
+    .page-header h1 {
+        font-size: 26px;
+        font-weight: 700;
+        color: #172554;
+        margin: 0;
+    }
+
+    .section-card {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 22px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .section-title {
+        font-size: 19px;
+        font-weight: 650;
+        color: #172554;
+        margin-bottom: 18px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+    }
+
+    .details-table th,
+    .details-table td {
+        padding: 12px 14px;
+        border: 1px solid #dee2e6;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .details-table th {
+        background: #f8fafc;
+        color: #334155;
+        font-weight: 600;
+    }
+
+    .details-table td {
+        color: #475569;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .btn-back,
+    .btn-edit {
+        display: inline-block;
+        padding: 9px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .btn-back {
+        background: #64748b;
+        color: white;
+    }
+
+    .btn-edit {
+        background: #f97316;
+        color: white;
+        margin-top: 18px;
+    }
+
+    .btn-back:hover {
+        background: #475569;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background: #ea580c;
+        color: white;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 5px 11px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .status-active {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .status-inactive {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .empty-message {
+        text-align: center !important;
+        color: #64748b;
+        padding: 20px !important;
+    }
+
+    @media (max-width: 600px) {
+        .section-card {
+            padding: 14px;
+        }
+
+        .details-table th,
+        .details-table td {
+            padding: 9px;
+        }
+    }
+</style>
+
+
+<!-- PAGE HEADER -->
+
+<div class="page-header">
+
+    <h1>Patient Details</h1>
+
+    <a href="{% url 'ha_patients' %}" class="btn-back">
+        Back to Patients
+    </a>
+
+</div>
+
+
+<!-- PERSONAL INFORMATION -->
+
+<div class="section-card">
+
+    <h2 class="section-title">Personal Information</h2>
+
+    <div class="table-responsive">
+
+        <table class="details-table">
+
+            <tr>
+                <th>Patient ID</th>
+                <td>{{ hospital_patient.patient_id_code|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Username</th>
+                <td>{{ patient.user.username|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>First Name</th>
+                <td>{{ patient.user.first_name|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Last Name</th>
+                <td>{{ patient.user.last_name|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Email</th>
+                <td>{{ patient.user.email|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Date of Birth</th>
+                <td>{{ patient.date_of_birth|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Gender</th>
+                <td>{{ patient.gender|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Contact Number</th>
+                <td>{{ patient.contact_number|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Address</th>
+                <td>{{ patient.address|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Blood Group</th>
+                <td>{{ patient.blood_group|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Emergency Contact</th>
+                <td>{{ patient.emergency_contact|default:"-" }}</td>
+            </tr>
+
+            <tr>
+                <th>Registration Date</th>
+                <td>
+                    {{ hospital_patient.registered_at|date:"d M Y"|default:"-" }}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Registration Status</th>
+                <td>
+                    {% if hospital_patient.is_active %}
+                        <span class="status status-active">Active</span>
+                    {% else %}
+                        <span class="status status-inactive">Inactive</span>
+                    {% endif %}
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    {% if hospital_patient %}
+        <a href="{% url 'ha_patient_update' hospital_patient.pk %}"
+           class="btn-edit">
+            Edit Patient
+        </a>
+    {% endif %}
+
+</div>
+
+
+<!-- APPOINTMENT HISTORY -->
+
+<div class="section-card">
+
+    <h2 class="section-title">Appointment History</h2>
+
+    <div class="table-responsive">
+
+        <table class="details-table">
+
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Doctor</th>
+                <th>Department</th>
+                <th>Status</th>
+            </tr>
+
+            {% for appointment in appointments %}
+
+            <tr>
+                <td>{{ appointment.date|date:"d M Y" }}</td>
+                <td>{{ appointment.time|time:"h:i A" }}</td>
+                <td>{{ appointment.doctor.user.username }}</td>
+                <td>{{ appointment.department.name }}</td>
+                <td>{{ appointment.status }}</td>
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="5" class="empty-message">
+                    No appointments found.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- MEDICAL RECORDS -->
+
+<div class="section-card">
+
+    <h2 class="section-title">Medical Records</h2>
+
+    <div class="table-responsive">
+
+        <table class="details-table">
+
+            <tr>
+                <th>Diagnosis</th>
+                <th>Doctor</th>
+                <th>Symptoms</th>
+                <th>Notes</th>
+            </tr>
+
+            {% for record in medical_records %}
+
+            <tr>
+                <td>{{ record.diagnosis }}</td>
+                <td>{{ record.doctor.user.username }}</td>
+                <td>{{ record.symptoms|default:"-" }}</td>
+                <td>{{ record.notes|default:"-" }}</td>
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="4" class="empty-message">
+                    No medical records found.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- PRESCRIPTIONS -->
+
+<div class="section-card">
+
+    <h2 class="section-title">Prescriptions</h2>
+
+    {% for prescription in prescriptions %}
+
+        <h3>Prescription #{{ prescription.id }}</h3>
+
+        <p>
+            <strong>Doctor:</strong>
+            {{ prescription.doctor.user.username }}
+        </p>
+
+        <div class="table-responsive">
+
+            <table class="details-table">
+
+                <tr>
+                    <th>Medicine</th>
+                    <th>Dosage</th>
+                    <th>Frequency</th>
+                    <th>Duration</th>
+                    <th>Instructions</th>
+                </tr>
+
+                {% for medicine in prescription.medicines.all %}
+
+                <tr>
+                    <td>{{ medicine.medicine_name }}</td>
+                    <td>{{ medicine.dosage }}</td>
+                    <td>{{ medicine.frequency }}</td>
+                    <td>{{ medicine.duration }}</td>
+                    <td>{{ medicine.instructions|default:"-" }}</td>
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="5" class="empty-message">
+                        No medicines recorded.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    {% empty %}
+
+        <p class="empty-message">No prescriptions found.</p>
+
+    {% endfor %}
+
+</div>
+
+
+<!-- LAB REPORTS -->
+
+<div class="section-card">
+
+    <h2 class="section-title">Lab Reports</h2>
+
+    <div class="table-responsive">
+
+        <table class="details-table">
+
+            <tr>
+                <th>Test Name</th>
+                <th>Test Date</th>
+                <th>Doctor</th>
+                <th>Result</th>
+                <th>Report</th>
+            </tr>
+
+            {% for report in lab_reports %}
+
+            <tr>
+                <td>{{ report.test_name }}</td>
+                <td>{{ report.test_date|date:"d M Y" }}</td>
+                <td>{{ report.doctor.user.username }}</td>
+                <td>{{ report.result_summary|default:"-" }}</td>
+
+                <td>
+                    {% if report.report_file %}
+                        <a href="{{ report.report_file.url }}" target="_blank">
+                            View Report
+                        </a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="5" class="empty-message">
+                    No lab reports found.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- INVOICES -->
+
+<div class="section-card">
+
+    <h2 class="section-title">Invoices</h2>
+
+    <div class="table-responsive">
+
+        <table class="details-table">
+
+            <tr>
+                <th>Invoice ID</th>
+                <th>Consultation Fee</th>
+                <th>Lab Fee</th>
+                <th>Other Charges</th>
+                <th>Total</th>
+                <th>Payment Status</th>
+            </tr>
+
+            {% for invoice in invoices %}
+
+            <tr>
+                <td>#{{ invoice.id }}</td>
+                <td>{{ invoice.consultation_fee }}</td>
+                <td>{{ invoice.lab_fee }}</td>
+                <td>{{ invoice.other_charges }}</td>
+                <td><strong>{{ invoice.total_amount }}</strong></td>
+                <td>{{ invoice.payment_status }}</td>
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="6" class="empty-message">
+                    No invoices found.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

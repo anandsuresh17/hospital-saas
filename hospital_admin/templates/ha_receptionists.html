@@ -1,18 +1,84 @@
 
 {% extends "ha_base.html" %}
-{% block title %}Receptionists | Hospital Admin{% endblock %}
-{% block content %}
-<h1>Receptionist Management</h1>
-<p>Manage reception staff at your hospital.</p>
-<button type="button">+ Add Receptionist</button>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th><th>Name</th><th>Email</th><th>Contact Number</th><th>Actions</th>
-    </tr>
-    <tr>
-        <td>1</td><td>Sample Receptionist</td><td>reception@example.com</td>
-        <td>0000000000</td><td>Edit | View</td>
-    </tr>
+{% block title %}Receptionists | Hospital Admin{% endblock %}
+
+{% block content %}
+
+<h1>Receptionist Management</h1>
+
+<p>Manage receptionists within your hospital.</p>
+
+<a href="{% url 'ha_receptionist_create' %}">
+    <button type="button">+ Add Receptionist</button>
+</a>
+
+<hr>
+
+<table border="1" cellpadding="10" cellspacing="0">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Contact Number</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for receptionist in receptionists %}
+
+        <tr>
+            <td>{{ receptionist.id }}</td>
+            <td>{{ receptionist.user.username }}</td>
+            <td>{{ receptionist.user.email }}</td>
+            <td>{{ receptionist.contact_number|default:"-" }}</td>
+
+            <td>
+                {% if receptionist.user.is_active %}
+                    Active
+                {% else %}
+                    Inactive
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="{% url 'ha_receptionist_update' receptionist.id %}">
+                    Edit
+                </a>
+
+                |
+
+                {% if receptionist.user.is_active %}
+
+                    <a href="{% url 'ha_receptionist_deactivate' receptionist.id %}">
+                        Deactivate
+                    </a>
+
+                {% else %}
+
+                    <a href="{% url 'ha_receptionist_activate' receptionist.id %}">
+                        Activate
+                    </a>
+
+                {% endif %}
+            </td>
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="6">No receptionists available.</td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
 </table>
+
 {% endblock %}

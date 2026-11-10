@@ -1,0 +1,26 @@
+
+{% extends "ha_base.html" %}
+
+{% block title %}Receptionist Form | Hospital Admin{% endblock %}
+
+{% block content %}
+
+{% if receptionist %}
+    <h1>Edit Receptionist</h1>
+{% else %}
+    <h1>Add Receptionist</h1>
+{% endif %}
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Save Receptionist</button>
+
+    <a href="{% url 'ha_receptionists' %}">Cancel</a>
+
+</form>
+
+{% endblock %}

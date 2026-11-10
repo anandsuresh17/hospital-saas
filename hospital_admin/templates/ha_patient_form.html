@@ -1,0 +1,28 @@
+
+{% extends "ha_base.html" %}
+
+{% block title %}Edit Patient{% endblock %}
+
+{% block content %}
+
+<h1>Edit Patient Information</h1>
+
+<p>
+    Patient ID: {{ hospital_patient.patient_id_code }}
+</p>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Save Changes</button>
+
+    <a href="{% url 'ha_patient_detail' hospital_patient.pk %}">
+        Cancel
+    </a>
+
+</form>
+
+{% endblock %}
