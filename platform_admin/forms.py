@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Hospital, SubscriptionPlan, HospitalTemplate
+from .models import Hospital, SubscriptionPlan, HospitalTemplate,Hospital
 
 
 # Hospital Form
@@ -73,3 +73,100 @@ class HospitalTemplateForm(forms.ModelForm):
             "preview_image",
             "is_active",
         ]
+
+
+
+
+class HospitalWebsiteForm(forms.ModelForm):
+
+    class Meta:
+        model = Hospital
+
+        fields = [
+            'name',
+            'email',
+            'contact_number',
+            'address',
+            'website',
+            'tagline',
+            'about',
+            'logo',
+            'banner',
+            'working_hours',
+            'facebook_url',
+            'instagram_url',
+            'template',
+        ]
+
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter hospital name',
+            }),
+
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter hospital email',
+            }),
+
+            'contact_number': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter contact number',
+            }),
+
+            'address': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'placeholder': 'Enter hospital address',
+            }),
+
+            'website': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'https://example.com',
+            }),
+
+            'tagline': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter hospital tagline',
+            }),
+
+            'about': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 5,
+                'placeholder': 'Write about your hospital',
+            }),
+
+            'logo': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            }),
+
+            'banner': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            }),
+
+            'working_hours': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Monday - Saturday: 9 AM - 6 PM',
+            }),
+
+            'facebook_url': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Facebook URL',
+            }),
+
+            'instagram_url': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Instagram URL',
+            }),
+
+            'template': forms.Select(attrs={
+                'class': 'form-select',
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['template'].queryset = (
+            self.fields['template'].queryset.filter(is_active=True)
+        )

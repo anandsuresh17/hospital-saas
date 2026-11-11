@@ -1,0 +1,224 @@
+
+{% extends 'ha_base.html' %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h2>Billing & Invoice Overview</h2>
+        <p class="text-muted">Monitor hospital invoices and payments</p>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Invoices</h6>
+                    <h3>{{ total_invoices }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Paid Invoices</h6>
+                    <h3 class="text-success">{{ paid_invoices }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Pending Invoices</h6>
+                    <h3 class="text-warning">{{ pending_invoices }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Cancelled Invoices</h6>
+                    <h3 class="text-danger">{{ cancelled_invoices }}</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Revenue -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <h6 class="text-muted">Total Revenue Collected</h6>
+            <h2 class="text-success mb-0">
+                ₹{{ total_revenue|floatformat:2 }}
+            </h2>
+            <small class="text-muted">
+                Calculated from paid invoices only
+            </small>
+        </div>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+
+            <form method="GET">
+                <div class="row g-3">
+
+                    <div class="col-md-5">
+                        <label class="form-label">Search Invoice</label>
+                        <input
+                            type="text"
+                            name="q"
+                            class="form-control"
+                            placeholder="Patient name, patient ID or invoice ID"
+                            value="{{ search_query }}"
+                        >
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Payment Status</label>
+                        <select name="status" class="form-select">
+                            <option value="">All Statuses</option>
+
+                            {% for value, label in payment_status_choices %}
+                                <option value="{{ value }}"
+                                    {% if selected_status == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label">Invoice Date</label>
+                        <input
+                            type="date"
+                            name="date"
+                            class="form-control"
+                            value="{{ selected_date }}"
+                        >
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            Filter
+                        </button>
+
+                        <a href="{% url 'ha_invoices' %}"
+                           class="btn btn-outline-secondary">
+                            Reset
+                        </a>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Invoice Table -->
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">Invoice Records</h5>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Invoice ID</th>
+                            <th>Patient</th>
+                            <th>Patient ID</th>
+                            <th>Appointment</th>
+                            <th>Total Amount</th>
+                            <th>Payment Status</th>
+                            <th>Created Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for invoice in invoices %}
+                        <tr>
+
+                            <td>
+                                <strong>#INV-{{ invoice.id }}</strong>
+                            </td>
+
+                            <td>
+                                {{ invoice.patient.patient.user.get_full_name|default:invoice.patient.patient.user.username }}
+                            </td>
+
+                            <td>
+                                {{ invoice.patient.patient_id_code }}
+                            </td>
+
+                            <td>
+                                #{{ invoice.appointment.id }}
+                            </td>
+
+                            <td>
+                                ₹{{ invoice.total_amount|floatformat:2 }}
+                            </td>
+
+                            <td>
+                                {% if invoice.payment_status == "Paid" %}
+                                    <span class="badge bg-success">Paid</span>
+
+                                {% elif invoice.payment_status == "Pending" %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+
+                                {% elif invoice.payment_status == "Cancelled" %}
+                                    <span class="badge bg-danger">Cancelled</span>
+
+                                {% else %}
+                                    <span class="badge bg-secondary">
+                                        {{ invoice.payment_status }}
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {{ invoice.created_at|date:"d M Y" }}
+                            </td>
+
+                            <td>
+                                <a href="{% url 'ha_invoice_detail' invoice.id %}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    View
+                                </a>
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="8"
+                                class="text-center text-muted py-5">
+                                No invoices found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -19,7 +19,23 @@
                 <li><a href="/hospital-admin/receptionists/">Receptionists</a></li>
                 <li><a href="/hospital-admin/patients/">Patients</a></li>
                 <li><a href="/hospital-admin/appointments/">Appointments</a></li>
-                li><a href="{% url 'ha_medical_records' %}">Medical Records</a></li>
+                <li><a href="{% url 'ha_medical_records' %}">Medical Records</a></li>
+                <li><a href="{% url 'ha_invoices' %}">   <i class="fas fa-file-invoice-dollar"></i>
+        <span>Billing & Invoices</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'ha_website_settings' %}">
+        <i class="fas fa-globe"></i>
+        <span>Website Management</span>
+    </a>
+</li>
+<li>
+    <a href="{% url 'ha_subscription' %}">
+        <i class="fas fa-credit-card"></i>
+        <span>Subscription</span>
+    </a>
+</li>
             </ul>
         </nav>
     </aside>

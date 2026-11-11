@@ -1,0 +1,170 @@
+{% extends 'ha_base.html' %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>Appointment Details</h2>
+            <p class="text-muted mb-0">
+                View complete appointment information
+            </p>
+        </div>
+
+        <a href="{% url 'ha_appointments' %}"
+           class="btn btn-outline-secondary">
+            Back to Appointments
+        </a>
+
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Appointment Information -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">Appointment Information</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <small class="text-muted">Appointment ID</small>
+                        <h6>#{{ appointment.id }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Date</small>
+                        <h6>{{ appointment.date|date:"d M Y" }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Time</small>
+                        <h6>{{ appointment.time|time:"h:i A" }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Department</small>
+                        <h6>{{ appointment.department.name }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Status</small>
+                        <div>
+                            {% if appointment.status == "Pending" %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% elif appointment.status == "Confirmed" %}
+                                <span class="badge bg-primary">Confirmed</span>
+                            {% elif appointment.status == "Completed" %}
+                                <span class="badge bg-success">Completed</span>
+                            {% elif appointment.status == "Cancelled" %}
+                                <span class="badge bg-danger">Cancelled</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ appointment.status }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Reason for Visit</small>
+                        <p class="mb-0">
+                            {{ appointment.reason|default:"Not provided" }}
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Created At</small>
+                        <h6>{{ appointment.created_at|date:"d M Y, h:i A" }}</h6>
+                    </div>
+
+                    <div>
+                        <small class="text-muted">Last Updated</small>
+                        <h6>{{ appointment.updated_at|date:"d M Y, h:i A" }}</h6>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Information -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">Patient Information</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <small class="text-muted">Patient Name</small>
+                        <h6>
+                            {{ appointment.patient.patient.user.get_full_name|default:appointment.patient.patient.user.username }}
+                        </h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Hospital Patient ID</small>
+                        <h6>{{ appointment.patient.patient_id_code }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Username</small>
+                        <h6>{{ appointment.patient.patient.user.username }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Email</small>
+                        <h6>
+                            {{ appointment.patient.patient.user.email|default:"Not available" }}
+                        </h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Hospital</small>
+                        <h6>{{ appointment.hospital.name }}</h6>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Doctor Information -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">Doctor Information</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <small class="text-muted">Doctor Name</small>
+                        <h6>
+                            {{ appointment.doctor.user.get_full_name|default:appointment.doctor.user.username }}
+                        </h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Username</small>
+                        <h6>{{ appointment.doctor.user.username }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Department</small>
+                        <h6>{{ appointment.department.name }}</h6>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,221 @@
+
+{% extends 'ha_base.html' %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>Invoice Details</h2>
+            <p class="text-muted mb-0">
+                Invoice #INV-{{ invoice.id }}
+            </p>
+        </div>
+
+        <a href="{% url 'ha_invoices' %}"
+           class="btn btn-outline-secondary">
+            Back to Invoices
+        </a>
+
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Patient Information -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">Patient Information</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <small class="text-muted">Patient Name</small>
+                        <h6>
+                            {{ invoice.patient.patient.user.get_full_name|default:invoice.patient.patient.user.username }}
+                        </h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Patient ID</small>
+                        <h6>{{ invoice.patient.patient_id_code }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Username</small>
+                        <h6>{{ invoice.patient.patient.user.username }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Email</small>
+                        <h6>
+                            {{ invoice.patient.patient.user.email|default:"Not available" }}
+                        </h6>
+                    </div>
+
+                    <div>
+                        <small class="text-muted">Hospital</small>
+                        <h6>{{ invoice.hospital.name }}</h6>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointment Information -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">Appointment Information</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <small class="text-muted">Appointment ID</small>
+                        <h6>#{{ invoice.appointment.id }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Doctor</small>
+                        <h6>
+                            {{ invoice.appointment.doctor.user.get_full_name|default:invoice.appointment.doctor.user.username }}
+                        </h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Department</small>
+                        <h6>{{ invoice.appointment.department.name }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Appointment Date</small>
+                        <h6>
+                            {{ invoice.appointment.date|date:"d M Y" }}
+                        </h6>
+                    </div>
+
+                    <div>
+                        <small class="text-muted">Appointment Time</small>
+                        <h6>
+                            {{ invoice.appointment.time|time:"h:i A" }}
+                        </h6>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Invoice Breakdown -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">Invoice Breakdown</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Consultation Fee</span>
+                        <strong>
+                            ₹{{ invoice.consultation_fee|floatformat:2 }}
+                        </strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Lab Fee</span>
+                        <strong>
+                            ₹{{ invoice.lab_fee|floatformat:2 }}
+                        </strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Other Charges</span>
+                        <strong>
+                            ₹{{ invoice.other_charges|floatformat:2 }}
+                        </strong>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+                        <h5>Total Amount</h5>
+                        <h5 class="text-primary">
+                            ₹{{ invoice.total_amount|floatformat:2 }}
+                        </h5>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Information -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0">Payment Information</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-4">
+                        <small class="text-muted">Payment Status</small>
+                        <div class="mt-1">
+
+                            {% if invoice.payment_status == "Paid" %}
+                                <span class="badge bg-success fs-6">Paid</span>
+
+                            {% elif invoice.payment_status == "Pending" %}
+                                <span class="badge bg-warning text-dark fs-6">
+                                    Pending
+                                </span>
+
+                            {% elif invoice.payment_status == "Cancelled" %}
+                                <span class="badge bg-danger fs-6">
+                                    Cancelled
+                                </span>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Invoice Created</small>
+                        <h6>
+                            {{ invoice.created_at|date:"d M Y, h:i A" }}
+                        </h6>
+                    </div>
+
+                    <hr>
+
+                    <h6 class="mb-3">Doctor Commission</h6>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Commission Percentage</span>
+                        <strong>
+                            {{ invoice.doctor_commission_percentage }}%
+                        </strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <span>Commission Amount</span>
+                        <strong>
+                            ₹{{ invoice.doctor_commission_amount|floatformat:2 }}
+                        </strong>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

@@ -45,6 +45,7 @@ class Role(models.Model):
         return self.name
 
 
+
 class Hospital(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField(unique=True)
@@ -52,18 +53,54 @@ class Hospital(models.Model):
     address = models.TextField()
     website = models.URLField(blank=True)
 
+    # Website Information
+    tagline = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    about = models.TextField(
+        blank=True
+    )
+
+    logo = models.ImageField(
+        upload_to="hospital/logos/",
+        blank=True,
+        null=True
+    )
+
+    banner = models.ImageField(
+        upload_to="hospital/banners/",
+        blank=True,
+        null=True
+    )
+
+    working_hours = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    facebook_url = models.URLField(blank=True)
+
+    instagram_url = models.URLField(blank=True)
+
+    # Website Template
     template = models.ForeignKey(
         HospitalTemplate,
         on_delete=models.PROTECT,
         related_name="hospitals",
     )
+
+    # Subscription
     subscription_plan = models.ForeignKey(
         SubscriptionPlan,
         on_delete=models.PROTECT,
         related_name="hospitals",
     )
 
+    # Status
     is_active = models.BooleanField(default=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

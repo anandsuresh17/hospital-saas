@@ -2,7 +2,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.db.models import Q
+from django.utils import timezone
+from django.db.models import Q, Sum
+from django.utils.dateparse import parse_date
 
 from platform_admin.models import (
     Hospital,
@@ -25,8 +27,9 @@ from .forms import (
     ReceptionistCreateForm,
     ReceptionistUpdateForm,
     PatientUpdateForm,
-)
 
+)
+from platform_admin.forms import HospitalWebsiteForm
 
 # ==========================================
 # TEMPORARY HOSPITAL SELECTION
@@ -862,12 +865,321 @@ def medical_record_detail(request, pk):
 
 
 # ==========================================
-# APPOINTMENT PLACEHOLDER
+# APPOINTMENT OVERVIEW - READ ONLY
 # ==========================================
 
 def appointments(request):
 
+    hospital = get_test_hospital()
+    today = timezone.localdate()
+
+    # Base queryset: only appointments belonging to this hospital.
+    appointment_list = Appointment.objects.filter(
+        hospital=hospital
+    ).select_related(
+        'patient__patient__user',
+        'doctor__user',
+        'department'
+    ).order_by('-date', '-time')
+
+    # Dashboard statistics are independent of search and filters.
+    hospital_appointments = Appointment.objects.filter(
+        hospital=hospital
+    )
+
+    total_appointments = hospital_appointments.count()
+    today_appointments = hospital_appointments.filter(date=today).count()
+    pending_appointments = hospital_appointments.filter(status='Pending').count()
+    confirmed_appointments = hospital_appointments.filter(status='Confirmed').count()
+    completed_appointments = hospital_appointments.filter(status='Completed').count()
+    cancelled_appointments = hospital_appointments.filter(status='Cancelled').count()
+
+    # Search by patient name, username, patient ID, doctor or department.
+    search_query = request.GET.get('q', '').strip()
+
+    if search_query:
+        appointment_list = appointment_list.filter(
+            Q(patient__patient__user__first_name__icontains=search_query) |
+            Q(patient__patient__user__last_name__icontains=search_query) |
+            Q(patient__patient__user__username__icontains=search_query) |
+            Q(patient__patient_id_code__icontains=search_query) |
+            Q(doctor__user__username__icontains=search_query) |
+            Q(doctor__user__first_name__icontains=search_query) |
+            Q(doctor__user__last_name__icontains=search_query) |
+            Q(department__name__icontains=search_query)
+        )
+
+    # Doctor filter.
+    doctor_id = request.GET.get('doctor', '').strip()
+
+    if doctor_id.isdigit():
+        appointment_list = appointment_list.filter(doctor_id=int(doctor_id))
+    else:
+        doctor_id = ''
+
+    # Department filter.
+    department_id = request.GET.get('department', '').strip()
+
+    if department_id.isdigit():
+        appointment_list = appointment_list.filter(department_id=int(department_id))
+    else:
+        department_id = ''
+
+    # Date filter. Invalid date input is ignored.
+    appointment_date = request.GET.get('date', '').strip()
+    parsed_date = parse_date(appointment_date) if appointment_date else None
+
+    if parsed_date:
+        appointment_list = appointment_list.filter(date=parsed_date)
+    else:
+        appointment_date = ''
+
+    # Status filter.
+    selected_status = request.GET.get('status', '').strip()
+    valid_statuses = [choice[0] for choice in Appointment.STATUS_CHOICES]
+
+    if selected_status in valid_statuses:
+        appointment_list = appointment_list.filter(status=selected_status)
+    else:
+        selected_status = ''
+
+    # Dropdown options are restricted to this hospital.
+    doctor_list = Doctor.objects.filter(
+        hospital=hospital
+    ).select_related('user').order_by('user__username')
+
+    department_list = Department.objects.filter(
+        hospital=hospital
+    ).order_by('name')
+
+    context = {
+        'hospital': hospital,
+        'appointments': appointment_list,
+
+        'total_appointments': total_appointments,
+        'today_appointments': today_appointments,
+        'pending_appointments': pending_appointments,
+        'confirmed_appointments': confirmed_appointments,
+        'completed_appointments': completed_appointments,
+        'cancelled_appointments': cancelled_appointments,
+
+        'doctors': doctor_list,
+        'departments': department_list,
+        'appointment_status_choices': Appointment.STATUS_CHOICES,
+
+        'search_query': search_query,
+        'selected_doctor': doctor_id,
+        'selected_department': department_id,
+        'selected_date': appointment_date,
+        'selected_status': selected_status,
+    }
+
     return render(
         request,
-        'ha_appointments.html'
+        'ha_appointments.html',
+        context
     )
+
+
+# ==========================================
+# APPOINTMENT DETAILS - READ ONLY
+# ==========================================
+
+def appointment_detail(request, pk):
+
+    hospital = get_test_hospital()
+
+    appointment = get_object_or_404(
+        Appointment.objects.select_related(
+            'hospital',
+            'patient__patient__user',
+            'doctor__user',
+            'department'
+        ),
+        pk=pk,
+        hospital=hospital
+    )
+
+    context = {
+        'appointment': appointment,
+    }
+
+    return render(
+        request,
+        'ha_appointment_detail.html',
+        context
+    )
+
+# ==========================================
+# BILLING & INVOICE OVERVIEW
+# ==========================================
+
+def invoices(request):
+    hospital = get_test_hospital()
+
+    # Get invoices belonging to the selected hospital
+    invoice_queryset = Invoice.objects.filter(
+        hospital=hospital
+    ).select_related(
+        'patient__patient__user',
+        'appointment',
+        'appointment__doctor__user',
+        'appointment__department',
+    ).order_by('-created_at')
+
+    # Dashboard statistics
+    total_invoices = invoice_queryset.count()
+
+    paid_invoices = invoice_queryset.filter(
+        payment_status="Paid"
+    ).count()
+
+    pending_invoices = invoice_queryset.filter(
+        payment_status="Pending"
+    ).count()
+
+    cancelled_invoices = invoice_queryset.filter(
+        payment_status="Cancelled"
+    ).count()
+
+    # Total collected from paid invoices
+    total_revenue = invoice_queryset.filter(
+        payment_status="Paid"
+    ).aggregate(
+        total=Sum('total_amount')
+    )['total'] or 0
+
+    # Search
+    search_query = request.GET.get('q', '').strip()
+
+    if search_query:
+        search_filter = (
+            Q(patient__patient__user__first_name__icontains=search_query) |
+            Q(patient__patient__user__last_name__icontains=search_query) |
+            Q(patient__patient__user__username__icontains=search_query) |
+            Q(patient__patient_id_code__icontains=search_query)
+        )
+
+        if search_query.isdigit():
+            search_filter |= Q(id=int(search_query))
+
+        invoice_queryset = invoice_queryset.filter(search_filter)
+
+    # Payment status filter
+    selected_status = request.GET.get('status', '')
+
+    valid_statuses = [
+        value for value, label in Invoice.PAYMENT_STATUS_CHOICES
+    ]
+
+    if selected_status in valid_statuses:
+        invoice_queryset = invoice_queryset.filter(
+            payment_status=selected_status
+        )
+    else:
+        selected_status = ''
+
+    # Date filter
+    selected_date = request.GET.get('date', '')
+
+    if selected_date:
+        parsed_date = parse_date(selected_date)
+
+        if parsed_date:
+            invoice_queryset = invoice_queryset.filter(
+                created_at__date=parsed_date
+            )
+        else:
+            selected_date = ''
+
+    context = {
+        'hospital': hospital,
+        'invoices': invoice_queryset,
+
+        # Statistics
+        'total_invoices': total_invoices,
+        'paid_invoices': paid_invoices,
+        'pending_invoices': pending_invoices,
+        'cancelled_invoices': cancelled_invoices,
+        'total_revenue': total_revenue,
+
+        # Filters
+        'search_query': search_query,
+        'selected_status': selected_status,
+        'selected_date': selected_date,
+        'payment_status_choices': Invoice.PAYMENT_STATUS_CHOICES,
+    }
+
+    return render(request, 'ha_invoices.html', context)
+
+
+# ==========================================
+# INVOICE DETAIL
+# ==========================================
+
+def invoice_detail(request, pk):
+    hospital = get_test_hospital()
+
+    invoice = get_object_or_404(
+        Invoice.objects.select_related(
+            'hospital',
+            'patient__patient__user',
+            'appointment',
+            'appointment__doctor__user',
+            'appointment__department',
+        ),
+        pk=pk,
+        hospital=hospital,
+    )
+
+    context = {
+        'hospital': hospital,
+        'invoice': invoice,
+    }
+
+    return render(
+        request,
+        'ha_invoice_detail.html',
+        context
+    )
+
+# ==========================================
+# HOSPITAL WEBSITE MANAGEMENT
+# ==========================================
+
+def website_settings(request):
+    hospital = get_test_hospital()
+
+    if request.method == "POST":
+        form = HospitalWebsiteForm(
+            request.POST,
+            request.FILES,
+            instance=hospital
+        )
+
+        if form.is_valid():
+            form.save()
+            return redirect('ha_website_settings')
+
+    else:
+        form = HospitalWebsiteForm(instance=hospital)
+
+    context = {
+        'hospital': hospital,
+        'form': form,
+    }
+
+    return render(
+        request,
+        'ha_website_settings.html',
+        context
+    )
+def subscription_info(request):
+    hospital = get_test_hospital()
+
+    context = {
+        'hospital': hospital,
+        'plan': hospital.subscription_plan,
+    }
+
+    return render(request, 'ha_subscription.html', context)

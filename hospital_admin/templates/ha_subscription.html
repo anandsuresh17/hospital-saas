@@ -1,0 +1,76 @@
+
+{% extends 'ha_base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">Subscription Information</h2>
+
+    <!-- Current Plan -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <h5 class="text-muted">Current Subscription Plan</h5>
+
+            <h2 class="text-primary">
+                {{ plan.name }}
+            </h2>
+
+            <p>{{ plan.description }}</p>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-muted">Plan Price</h6>
+                    <h4>₹{{ plan.price }}</h4>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-muted">Duration</h6>
+                    <h4>{{ plan.duration_days }} Days</h4>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h6 class="text-muted">Hospital Status</h6>
+
+                    {% if hospital.is_active %}
+                        <span class="badge bg-success">
+                            Active
+                        </span>
+                    {% else %}
+                        <span class="badge bg-danger">
+                            Inactive
+                        </span>
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Plan Features -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h5 class="mb-3">Plan Features</h5>
+
+            {% if plan.features %}
+                <div>
+                    {{ plan.features|linebreaks }}
+                </div>
+            {% else %}
+                <p class="text-muted">
+                    No features have been specified for this plan.
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

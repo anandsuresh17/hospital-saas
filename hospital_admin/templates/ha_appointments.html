@@ -1,17 +1,248 @@
+{% extends 'ha_base.html' %}
 
-{% extends "ha_base.html" %}
-{% block title %}Appointments | Hospital Admin{% endblock %}
 {% block content %}
-<h1>Appointment Management</h1>
-<p>Monitor appointments scheduled at your hospital.</p>
+<div class="container-fluid py-4">
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>Appointment ID</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Status</th><th>Actions</th>
-    </tr>
-    <tr>
-        <td>1</td><td>Sample Patient</td><td>Dr. Sample</td>
-        <td>Pending</td><td>Pending</td><td>View</td>
-    </tr>
-</table>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Appointment Overview</h2>
+            <p class="text-muted mb-0">Monitor all hospital appointments</p>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4 col-lg-2">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Total</h6>
+                    <h3>{{ total_appointments }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Today</h6>
+                    <h3>{{ today_appointments }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Pending</h6>
+                    <h3>{{ pending_appointments }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Confirmed</h6>
+                    <h3>{{ confirmed_appointments }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Completed</h6>
+                    <h3>{{ completed_appointments }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h6 class="text-muted">Cancelled</h6>
+                    <h3>{{ cancelled_appointments }}</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+
+            <form method="GET">
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label class="form-label">Search</label>
+                        <input
+                            type="text"
+                            name="q"
+                            class="form-control"
+                            placeholder="Patient, patient ID, doctor..."
+                            value="{{ search_query }}"
+                        >
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label">Doctor</label>
+                        <select name="doctor" class="form-select">
+                            <option value="">All Doctors</option>
+                            {% for doctor in doctors %}
+                                <option value="{{ doctor.id }}"
+                                    {% if selected_doctor == doctor.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ doctor.user.get_full_name|default:doctor.user.username }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label">Department</label>
+                        <select name="department" class="form-select">
+                            <option value="">All Departments</option>
+                            {% for department in departments %}
+                                <option value="{{ department.id }}"
+                                    {% if selected_department == department.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ department.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label">Date</label>
+                        <input
+                            type="date"
+                            name="date"
+                            class="form-control"
+                            value="{{ selected_date }}"
+                        >
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label">Status</label>
+                        <select name="status" class="form-select">
+                            <option value="">All Statuses</option>
+                            {% for value, label in appointment_status_choices %}
+                                <option value="{{ value }}"
+                                    {% if selected_status == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-12 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            Apply Filters
+                        </button>
+                        <a href="{% url 'ha_appointments' %}"
+                           class="btn btn-outline-secondary">
+                            Reset
+                        </a>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Appointment Table -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0">Appointments</h5>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Patient</th>
+                            <th>Patient ID</th>
+                            <th>Doctor</th>
+                            <th>Department</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    {{ appointment.patient.patient.user.get_full_name|default:appointment.patient.patient.user.username }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ appointment.patient.patient_id_code }}
+                            </td>
+
+                            <td>
+                                {{ appointment.doctor.user.get_full_name|default:appointment.doctor.user.username }}
+                            </td>
+
+                            <td>
+                                {{ appointment.department.name }}
+                            </td>
+
+                            <td>
+                                {{ appointment.date|date:"d M Y" }}
+                            </td>
+
+                            <td>
+                                {{ appointment.time|time:"h:i A" }}
+                            </td>
+
+                            <td>
+                                {% if appointment.status == "Pending" %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                {% elif appointment.status == "Confirmed" %}
+                                    <span class="badge bg-primary">Confirmed</span>
+                                {% elif appointment.status == "Completed" %}
+                                    <span class="badge bg-success">Completed</span>
+                                {% elif appointment.status == "Cancelled" %}
+                                    <span class="badge bg-danger">Cancelled</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ appointment.status }}</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <a href="{% url 'ha_appointment_detail' appointment.id %}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    View
+                                </a>
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center py-5 text-muted">
+                                No appointments found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
