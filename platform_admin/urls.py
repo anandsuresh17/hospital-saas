@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+
     # Super Admin Dashboard
     path('', views.dashboard, name='platform_dashboard'),
 
@@ -26,4 +27,17 @@ urlpatterns = [
     path('templates/<int:pk>/edit/', views.template_update, name='template_update'),
     path('templates/<int:pk>/delete/', views.template_delete, name='template_delete'),
     path('templates/<int:pk>/activate/', views.template_activate, name='template_activate'),
+
+    # Subscription Requests
+    path(
+        'subscription-requests/',
+        views.subscription_requests,
+        name='subscription_requests'
+    ),
+
+    path(
+        'subscription-requests/<int:pk>/review/',
+        views.review_subscription_request,
+        name='review_subscription_request'
+    ),
 ]

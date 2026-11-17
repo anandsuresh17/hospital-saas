@@ -1,0 +1,113 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">Review Subscription Request</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <p>
+                <strong>Hospital:</strong>
+                {{ subscription_request.hospital.name }}
+            </p>
+
+            <p>
+                <strong>Current Plan:</strong>
+                {{ subscription_request.current_plan.name }}
+            </p>
+
+            <p>
+                <strong>Requested Plan:</strong>
+                {{ subscription_request.requested_plan.name }}
+            </p>
+
+            <p>
+                <strong>Request Date:</strong>
+                {{ subscription_request.created_at|date:"d M Y" }}
+            </p>
+
+            <p>
+                <strong>Hospital Message:</strong>
+                {{ subscription_request.message|default:"No message provided." }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                {{ subscription_request.status }}
+            </p>
+
+            {% if subscription_request.status == "Pending" %}
+
+                <hr>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Admin Remarks
+                        </label>
+
+                        <textarea
+                            name="admin_remarks"
+                            class="form-control"
+                            rows="4"
+                            placeholder="Enter remarks for the hospital"
+                        ></textarea>
+                    </div>
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="approve"
+                        class="btn btn-success"
+                    >
+                        Approve Request
+                    </button>
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="reject"
+                        class="btn btn-danger"
+                    >
+                        Reject Request
+                    </button>
+
+                    <a
+                        href="{% url 'subscription_requests' %}"
+                        class="btn btn-secondary"
+                    >
+                        Back
+                    </a>
+
+                </form>
+
+            {% else %}
+
+                <hr>
+
+                <p>
+                    <strong>Admin Remarks:</strong>
+                    {{ subscription_request.admin_remarks|default:"-" }}
+                </p>
+
+                <a
+                    href="{% url 'subscription_requests' %}"
+                    class="btn btn-secondary"
+                >
+                    Back
+                </a>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -98,6 +98,17 @@ class Hospital(models.Model):
         related_name="hospitals",
     )
 
+    # Subscription Period
+    subscription_start_date = models.DateField(
+        null=True,
+        blank=True
+    )
+
+    subscription_end_date = models.DateField(
+        null=True,
+        blank=True
+    )
+
     # Status
     is_active = models.BooleanField(default=True)
 
@@ -106,6 +117,7 @@ class Hospital(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
 class HospitalAdmin(models.Model):
@@ -509,3 +521,59 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class SubscriptionRequest(models.Model):
+
+    STATUS_CHOICES = [
+        ("Pending", "Pending"),
+        ("Approved", "Approved"),
+        ("Rejected", "Rejected"),
+    ]
+
+    hospital = models.ForeignKey(
+        Hospital,
+        on_delete=models.CASCADE,
+        related_name="subscription_requests"
+    )
+
+    current_plan = models.ForeignKey(
+        SubscriptionPlan,
+        on_delete=models.PROTECT,
+        related_name="current_subscription_requests"
+    )
+
+    requested_plan = models.ForeignKey(
+        SubscriptionPlan,
+        on_delete=models.PROTECT,
+        related_name="requested_subscription_requests"
+    )
+
+    message = models.TextField(blank=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="Pending"
+    )
+
+    admin_remarks = models.TextField(blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    reviewed_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["hospital"],
+                condition=models.Q(status="Pending"),
+                name="one_pending_subscription_request_per_hospital"
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.hospital.name} - {self.requested_plan.name}"

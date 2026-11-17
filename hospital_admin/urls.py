@@ -41,10 +41,15 @@ urlpatterns = [
     # Medical Records
     path('medical-records/', views.medical_records, name='ha_medical_records'),
     path('medical-records/<int:pk>/', views.medical_record_detail, name='ha_medical_record_detail'),
+
     # Billing & Invoice Management
     path('invoices/', views.invoices, name='ha_invoices'),
     path('invoices/<int:pk>/', views.invoice_detail, name='ha_invoice_detail'),
 
-    path('website-settings/',views.website_settings,name='ha_website_settings'),
+    # Hospital Website Management
+    path('website-settings/', views.website_settings, name='ha_website_settings'),
+
+    # Subscription Management
     path('subscription/', views.subscription_info, name='ha_subscription'),
+    path('subscription/request/', views.subscription_request, name='ha_subscription_request'),
 ]

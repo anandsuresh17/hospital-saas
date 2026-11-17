@@ -5,7 +5,15 @@
 
 <div class="container-fluid">
 
-    <h2 class="mb-4">Subscription Information</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Subscription Information</h2>
+
+        <a href="{% url 'ha_subscription_request' %}"
+           class="btn btn-primary">
+            <i class="fas fa-exchange-alt me-2"></i>
+            Request Plan Change
+        </a>
+    </div>
 
     <!-- Current Plan -->
     <div class="card shadow-sm mb-4">
@@ -49,6 +57,32 @@
 
             </div>
 
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <h6 class="text-muted">Subscription Start Date</h6>
+
+                    {% if hospital.subscription_start_date %}
+                        <h5>{{ hospital.subscription_start_date|date:"d M Y" }}</h5>
+                    {% else %}
+                        <p class="text-muted">Not specified</p>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <h6 class="text-muted">Subscription End Date</h6>
+
+                    {% if hospital.subscription_end_date %}
+                        <h5>{{ hospital.subscription_end_date|date:"d M Y" }}</h5>
+                    {% else %}
+                        <p class="text-muted">Not specified</p>
+                    {% endif %}
+                </div>
+
+            </div>
+
         </div>
     </div>
 
@@ -72,5 +106,10 @@
     </div>
 
 </div>
+<a href="{% url 'ha_subscription_request' %}"
+   class="btn btn-primary">
+    <i class="fas fa-history"></i>
+    View Subscription Request History
+</a>
 
 {% endblock %}

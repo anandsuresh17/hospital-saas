@@ -1,0 +1,77 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">Subscription Requests</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+
+                    <thead>
+                        <tr>
+                            <th>Hospital</th>
+                            <th>Current Plan</th>
+                            <th>Requested Plan</th>
+                            <th>Request Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in requests %}
+
+                        <tr>
+                            <td>{{ item.hospital.name }}</td>
+                            <td>{{ item.current_plan.name }}</td>
+                            <td>{{ item.requested_plan.name }}</td>
+                            <td>{{ item.created_at|date:"d M Y" }}</td>
+
+                            <td>
+                                {% if item.status == "Approved" %}
+                                    <span class="badge bg-success">Approved</span>
+                                {% elif item.status == "Rejected" %}
+                                    <span class="badge bg-danger">Rejected</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if item.status == "Pending" %}
+                                    <a href="{% url 'review_subscription_request' item.pk %}"
+                                       class="btn btn-sm btn-primary">
+                                        Review
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted">Reviewed</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                No subscription requests found.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

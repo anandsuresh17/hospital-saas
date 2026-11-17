@@ -1,13 +1,22 @@
 
 from django import forms
-from .models import Hospital, SubscriptionPlan, HospitalTemplate,Hospital
+
+from .models import (
+    Hospital,
+    SubscriptionPlan,
+    HospitalTemplate,
+)
 
 
-# Hospital Form
+# ==========================================
+# HOSPITAL FORM
+# ==========================================
+
 class HospitalForm(forms.ModelForm):
 
     class Meta:
         model = Hospital
+
         fields = [
             "name",
             "email",
@@ -30,7 +39,9 @@ class HospitalForm(forms.ModelForm):
             current_plan = self.instance.subscription_plan
 
             self.fields["subscription_plan"].queryset |= (
-                SubscriptionPlan.objects.filter(pk=current_plan.pk)
+                SubscriptionPlan.objects.filter(
+                    pk=current_plan.pk
+                )
             )
 
         self.fields["template"].queryset = (
@@ -41,15 +52,21 @@ class HospitalForm(forms.ModelForm):
             current_template = self.instance.template
 
             self.fields["template"].queryset |= (
-                HospitalTemplate.objects.filter(pk=current_template.pk)
+                HospitalTemplate.objects.filter(
+                    pk=current_template.pk
+                )
             )
 
 
-# Subscription Plan Form
+# ==========================================
+# SUBSCRIPTION PLAN FORM
+# ==========================================
+
 class SubscriptionPlanForm(forms.ModelForm):
 
     class Meta:
         model = SubscriptionPlan
+
         fields = [
             "name",
             "price",
@@ -60,11 +77,15 @@ class SubscriptionPlanForm(forms.ModelForm):
         ]
 
 
-# Hospital Template Form
+# ==========================================
+# HOSPITAL TEMPLATE FORM
+# ==========================================
+
 class HospitalTemplateForm(forms.ModelForm):
 
     class Meta:
         model = HospitalTemplate
+
         fields = [
             "name",
             "template_key",
@@ -75,7 +96,9 @@ class HospitalTemplateForm(forms.ModelForm):
         ]
 
 
-
+# ==========================================
+# HOSPITAL WEBSITE FORM
+# ==========================================
 
 class HospitalWebsiteForm(forms.ModelForm):
 
@@ -170,3 +193,6 @@ class HospitalWebsiteForm(forms.ModelForm):
         self.fields['template'].queryset = (
             self.fields['template'].queryset.filter(is_active=True)
         )
+
+
+

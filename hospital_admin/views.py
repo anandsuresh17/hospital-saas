@@ -1,7 +1,8 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from django.db import transaction
+from django.db import transaction, IntegrityError
+from django.contrib import messages
 from django.utils import timezone
 from django.db.models import Q, Sum
 from django.utils.dateparse import parse_date
@@ -18,6 +19,7 @@ from platform_admin.models import (
     Prescription,
     LabReport,
     Invoice,
+    SubscriptionRequest,
 )
 
 from .forms import (
@@ -27,7 +29,7 @@ from .forms import (
     ReceptionistCreateForm,
     ReceptionistUpdateForm,
     PatientUpdateForm,
-
+    SubscriptionRequestForm,
 )
 from platform_admin.forms import HospitalWebsiteForm
 
@@ -1183,3 +1185,74 @@ def subscription_info(request):
     }
 
     return render(request, 'ha_subscription.html', context)
+
+# ==========================================
+# SUBSCRIPTION PLAN REQUEST
+# ==========================================
+
+
+def subscription_request(request):
+    hospital = get_test_hospital()
+
+    # Retrieve all previous requests for this hospital.
+    request_history = SubscriptionRequest.objects.filter(
+        hospital=hospital
+    ).select_related(
+        'current_plan',
+        'requested_plan'
+    ).order_by('-created_at')
+
+    # Check for an existing pending request.
+    pending_request = request_history.filter(
+        status="Pending"
+    ).first()
+
+    if pending_request:
+        form = None
+
+    elif request.method == 'POST':
+        form = SubscriptionRequestForm(request.POST)
+
+        if form.is_valid():
+            requested_plan = form.cleaned_data['requested_plan']
+
+            if requested_plan.pk == hospital.subscription_plan_id:
+                form.add_error(
+                    'requested_plan',
+                    'You are already subscribed to this plan.'
+                )
+            else:
+                try:
+                    with transaction.atomic():
+                        subscription = form.save(commit=False)
+                        subscription.hospital = hospital
+                        subscription.current_plan = hospital.subscription_plan
+                        subscription.status = 'Pending'
+                        subscription.save()
+
+                    messages.success(
+                        request,
+                        'Your subscription request has been submitted successfully.'
+                    )
+                    return redirect('ha_subscription_request')
+
+                except IntegrityError:
+                    messages.warning(
+                        request,
+                        'A pending subscription request already exists.'
+                    )
+                    return redirect('ha_subscription_request')
+
+    else:
+        form = SubscriptionRequestForm()
+
+    return render(
+        request,
+        'ha_subscription_request.html',
+        {
+            'hospital': hospital,
+            'form': form,
+            'pending_request': pending_request,
+            'request_history': request_history,
+        }
+    )

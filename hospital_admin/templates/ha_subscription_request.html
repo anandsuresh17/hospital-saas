@@ -1,0 +1,236 @@
+
+{% extends 'ha_base.html' %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <!-- Page Heading -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Subscription Management</h2>
+        <a href="{% url 'ha_subscription' %}" class="btn btn-secondary">
+            Back to Subscription
+        </a>
+    </div>
+
+    <!-- Django Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Current Subscription -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Current Subscription</h5>
+        </div>
+
+        <div class="card-body">
+            <p>
+                <strong>Hospital:</strong>
+                {{ hospital.name }}
+            </p>
+
+            <p>
+                <strong>Current Plan:</strong>
+                {% if hospital.subscription_plan %}
+                    {{ hospital.subscription_plan.name }}
+                {% else %}
+                    No plan assigned
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Subscription Start:</strong>
+                {{ hospital.subscription_start_date|default:"Not available" }}
+            </p>
+
+            <p>
+                <strong>Subscription End:</strong>
+                {{ hospital.subscription_end_date|default:"Not available" }}
+            </p>
+        </div>
+    </div>
+
+    <!-- Plan Request Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Request a Plan Change</h5>
+        </div>
+
+        <div class="card-body">
+
+            {% if pending_request %}
+
+                <div class="alert alert-warning">
+                    <h6 class="alert-heading">
+                        You already have a pending request.
+                    </h6>
+                    Your request is waiting for Super Admin review.
+                </div>
+
+                <p>
+                    <strong>Requested Plan:</strong>
+                    {{ pending_request.requested_plan.name }}
+                </p>
+
+                <p>
+                    <strong>Request Date:</strong>
+                    {{ pending_request.created_at|date:"d M Y, h:i A" }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    <span class="badge bg-warning text-dark">
+                        Pending
+                    </span>
+                </p>
+
+            {% else %}
+
+                {% if form %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Select New Subscription Plan
+                            </label>
+
+                            {{ form.requested_plan }}
+
+                            {% for error in form.requested_plan.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Reason for Plan Change
+                            </label>
+
+                            {{ form.message }}
+
+                            {% for error in form.message.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Submit Request
+                        </button>
+                    </form>
+
+                {% endif %}
+
+            {% endif %}
+
+        </div>
+    </div>
+
+    <!-- Subscription Request History -->
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Subscription Request History</h5>
+        </div>
+
+        <div class="card-body">
+
+            {% if request_history %}
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>Current Plan</th>
+                                <th>Requested Plan</th>
+                                <th>Request Date</th>
+                                <th>Status</th>
+                                <th>Admin Remarks</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in request_history %}
+
+                                <tr>
+                                    <td>
+                                        {{ item.current_plan.name }}
+                                    </td>
+
+                                    <td>
+                                        {{ item.requested_plan.name }}
+                                    </td>
+
+                                    <td>
+                                        {{ item.created_at|date:"d M Y, h:i A" }}
+                                    </td>
+
+                                    <td>
+                                        {% if item.status == "Pending" %}
+                                            <span class="badge bg-warning text-dark">
+                                                Pending
+                                            </span>
+
+                                        {% elif item.status == "Approved" %}
+                                            <span class="badge bg-success">
+                                                Approved
+                                            </span>
+
+                                        {% elif item.status == "Rejected" %}
+                                            <span class="badge bg-danger">
+                                                Rejected
+                                            </span>
+
+                                        {% else %}
+                                            <span class="badge bg-secondary">
+                                                {{ item.status }}
+                                            </span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        {% if item.status == "Rejected" %}
+                                            {{ item.admin_remarks|default:"No rejection reason provided." }}
+
+                                        {% elif item.status == "Approved" %}
+                                            {{ item.admin_remarks|default:"No additional remarks." }}
+
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+            {% else %}
+
+                <p class="text-muted mb-0">
+                    No subscription request history available.
+                </p>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
