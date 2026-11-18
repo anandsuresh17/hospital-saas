@@ -1,15 +1,76 @@
 
-{% extends "doc_base.html" %}
-{% block title %}Appointments | Doctor{% endblock %}
+{% extends 'doc_base.html' %}
+
+{% block title %}Appointments{% endblock %}
+{% block page_heading %}Appointments{% endblock %}
+
 {% block content %}
-<h1>My Appointments</h1>
-<p>View and manage your assigned appointments.</p>
-<table>
-    <thead>
-        <tr><th>Patient</th><th>Date</th><th>Time</th><th>Status</th><th>Action</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Sample Patient</td><td>--</td><td>--</td><td>Pending</td><td>View</td></tr>
-    </tbody>
-</table>
+
+<div class="content-card">
+
+    <h5 class="mb-4">My Appointments</h5>
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Department</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for appointment in appointments %}
+
+                <tr>
+                    <td>
+                        {{ appointment.patient.patient.user.get_full_name|default:appointment.patient.patient.user.username }}
+                    </td>
+
+                    <td>{{ appointment.department.name }}</td>
+
+                    <td>{{ appointment.date|date:"d M Y" }}</td>
+
+                    <td>{{ appointment.time|time:"h:i A" }}</td>
+
+                    <td>{{ appointment.reason|default:"-" }}</td>
+
+                    <td>
+                        {% if appointment.status == "Confirmed" %}
+                            <span class="badge bg-primary">Confirmed</span>
+                        {% elif appointment.status == "Completed" %}
+                            <span class="badge bg-success">Completed</span>
+                        {% elif appointment.status == "Cancelled" %}
+                            <span class="badge bg-danger">Cancelled</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% endif %}
+                    </td>
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="6" class="text-center text-muted py-4">
+                        No appointments found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
 {% endblock %}

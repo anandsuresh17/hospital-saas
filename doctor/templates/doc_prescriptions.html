@@ -1,11 +1,86 @@
 
-{% extends "doc_base.html" %}
-{% block title %}Prescriptions | Doctor{% endblock %}
+{% extends 'doc_base.html' %}
+
+{% block title %}Prescriptions{% endblock %}
+{% block page_heading %}Prescriptions{% endblock %}
+
 {% block content %}
-<h1>Prescriptions</h1>
-<p>Create and review prescriptions for your patients.</p>
-<table>
-    <thead><tr><th>Patient</th><th>Date</th><th>Medicines</th><th>Action</th></tr></thead>
-    <tbody><tr><td>Sample Patient</td><td>--</td><td>--</td><td>View</td></tr></tbody>
-</table>
+
+<div class="content-card">
+
+    <h5 class="mb-4">My Prescriptions</h5>
+
+    {% for prescription in prescriptions %}
+
+    <div class="border rounded p-3 mb-3">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h6 class="mb-0">
+                Patient:
+                {{ prescription.patient.patient.user.get_full_name|default:prescription.patient.patient.user.username }}
+            </h6>
+
+            <span class="text-muted">
+                {{ prescription.created_at|date:"d M Y" }}
+            </span>
+
+        </div>
+
+        <strong>Medicines</strong>
+
+        <div class="table-responsive mt-2">
+
+            <table class="table table-sm table-bordered">
+
+                <thead>
+                    <tr>
+                        <th>Medicine</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>Duration</th>
+                        <th>Instructions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for medicine in prescription.medicines.all %}
+
+                    <tr>
+                        <td>{{ medicine.medicine_name }}</td>
+                        <td>{{ medicine.dosage }}</td>
+                        <td>{{ medicine.frequency }}</td>
+                        <td>{{ medicine.duration }}</td>
+                        <td>{{ medicine.instructions|default:"-" }}</td>
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            No medicines added.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <p class="text-muted">
+        No prescriptions found.
+    </p>
+
+    {% endfor %}
+
+</div>
+
 {% endblock %}

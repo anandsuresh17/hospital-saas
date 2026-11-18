@@ -1,35 +1,187 @@
 
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Doctor Panel{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            background: #f5f7fb;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #172554;
+            color: white;
+            padding: 25px 15px;
+            overflow-y: auto;
+        }
+
+        .sidebar h4 {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #dbeafe;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 7px;
+            margin-bottom: 7px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .sidebar a i {
+            width: 22px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 25px;
+        }
+
+        .topbar {
+            background: white;
+            padding: 18px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            padding: 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            height: 100%;
+        }
+
+        .stat-icon {
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        @media(max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                padding: 15px 8px;
+            }
+
+            .sidebar h4,
+            .sidebar .menu-text {
+                display: none;
+            }
+
+            .sidebar a {
+                text-align: center;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
 </head>
+
 <body>
-    <aside>
-        <h2>Hospital SaaS</h2>
-        <p>Doctor Panel</p>
 
-        <nav>
-            <ul>
-                <li><a href="/doctor/">Dashboard</a></li>
-                <li><a href="/doctor/appointments/">Appointments</a></li>
-                <li><a href="/doctor/patients/">Patients</a></li>
-                <li><a href="/doctor/medical-records/">Medical Records</a></li>
-                <li><a href="/doctor/prescriptions/">Prescriptions</a></li>
-                <li><a href="/doctor/lab-reports/">Lab Reports</a></li>
-            </ul>
-        </nav>
-    </aside>
+    <!-- Sidebar -->
+    <div class="sidebar">
 
-    <header>
-        <h3>Doctor Workspace</h3>
-        <p>Manage appointments and patient care</p>
-    </header>
+        <h4>
+            <i class="fas fa-user-doctor"></i>
+            Doctor Panel
+        </h4>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+        <a href="{% url 'doctor_dashboard' %}"
+           class="{% if request.resolver_match.url_name == 'doctor_dashboard' %}active{% endif %}">
+            <i class="fas fa-chart-line"></i>
+            <span class="menu-text"> Dashboard</span>
+        </a>
+
+        <a href="{% url 'doctor_appointments' %}"
+           class="{% if request.resolver_match.url_name == 'doctor_appointments' %}active{% endif %}">
+            <i class="fas fa-calendar-check"></i>
+            <span class="menu-text"> Appointments</span>
+        </a>
+
+        <a href="{% url 'doctor_patients' %}"
+           class="{% if request.resolver_match.url_name == 'doctor_patients' %}active{% endif %}">
+            <i class="fas fa-users"></i>
+            <span class="menu-text"> Patients</span>
+        </a>
+
+        <a href="{% url 'doctor_medical_records' %}"
+           class="{% if request.resolver_match.url_name == 'doctor_medical_records' %}active{% endif %}">
+            <i class="fas fa-file-medical"></i>
+            <span class="menu-text"> Medical Records</span>
+        </a>
+
+        <a href="{% url 'doctor_prescriptions' %}"
+           class="{% if request.resolver_match.url_name == 'doctor_prescriptions' %}active{% endif %}">
+            <i class="fas fa-prescription"></i>
+            <span class="menu-text"> Prescriptions</span>
+        </a>
+
+        <a href="{% url 'doctor_lab_reports' %}"
+           class="{% if request.resolver_match.url_name == 'doctor_lab_reports' %}active{% endif %}">
+            <i class="fas fa-flask"></i>
+            <span class="menu-text"> Lab Reports</span>
+        </a>
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="topbar d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+                {% block page_heading %}Doctor Dashboard{% endblock %}
+            </h5>
+
+            <div>
+                <i class="fas fa-user-circle me-2"></i>
+                {{ request.user.get_full_name|default:request.user.username }}
+            </div>
+
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% block extra_js %}{% endblock %}
+
 </body>
 </html>
