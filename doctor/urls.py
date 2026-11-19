@@ -3,17 +3,30 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+
     # Dashboard
     path('', views.dashboard, name='doctor_dashboard'),
 
     # Appointments
-    path('appointments/', views.appointments, name='doctor_appointments'),
+    path(
+        'appointments/',
+        views.appointments,
+        name='doctor_appointments'
+    ),
 
     # Patients
-    path('patients/', views.patients, name='doctor_patients'),
+    path(
+        'patients/',
+        views.patients,
+        name='doctor_patients'
+    ),
 
     # Medical Records
-    path('medical-records/', views.medical_records, name='doctor_medical_records'),
+    path(
+        'medical-records/',
+        views.medical_records,
+        name='doctor_medical_records'
+    ),
 
     path(
         'medical-records/create/',
@@ -34,8 +47,58 @@ urlpatterns = [
     ),
 
     # Prescriptions
-    path('prescriptions/', views.prescriptions, name='doctor_prescriptions'),
+    path(
+        'prescriptions/',
+        views.prescriptions,
+        name='doctor_prescriptions'
+    ),
+
+    path(
+        'prescriptions/create/',
+        views.create_prescription,
+        name='doctor_create_prescription'
+    ),
+
+    path(
+        'prescriptions/<int:prescription_id>/',
+        views.prescription_detail,
+        name='doctor_prescription_detail'
+    ),
+
+    path(
+        'prescriptions/<int:prescription_id>/edit/',
+        views.edit_prescription,
+        name='doctor_edit_prescription'
+    ),
+
+    path(
+        'prescriptions/<int:prescription_id>/delete/',
+        views.delete_prescription,
+        name='doctor_delete_prescription'
+    ),
 
     # Lab Reports
-    path('lab-reports/', views.lab_reports, name='doctor_lab_reports'),
+    path(
+        'lab-reports/',
+        views.lab_reports,
+        name='doctor_lab_reports'
+    ),
+
+    path(
+        'lab-reports/create/',
+        views.create_lab_report,
+        name='doctor_create_lab_report'
+    ),
+
+    path(
+        'lab-reports/<int:report_id>/edit/',
+        views.edit_lab_report,
+        name='doctor_edit_lab_report'
+    ),
+
+    path(
+        'lab-reports/<int:report_id>/delete/',
+        views.delete_lab_report,
+        name='doctor_delete_lab_report'
+    ),
 ]

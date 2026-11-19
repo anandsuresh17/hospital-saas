@@ -2,75 +2,124 @@
 {% extends 'doc_base.html' %}
 
 {% block title %}Lab Reports{% endblock %}
-{% block page_heading %}Lab Reports{% endblock %}
+{% block page_heading %}Lab Report Management{% endblock %}
 
 {% block content %}
 
-<div class="content-card">
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <h5 class="mb-4">Patient Lab Reports</h5>
+    <h5>Lab Report History</h5>
 
-    <div class="table-responsive">
+    <a href="{% url 'doctor_create_lab_report' %}"
+       class="btn btn-primary">
+        <i class="fas fa-plus me-1"></i>
+        Add Lab Report
+    </a>
 
-        <table class="table table-hover align-middle">
+</div>
 
-            <thead>
-                <tr>
-                    <th>Patient</th>
-                    <th>Test Name</th>
-                    <th>Test Date</th>
-                    <th>Result</th>
-                    <th>Remarks</th>
-                    <th>Report</th>
-                </tr>
-            </thead>
+<div class="card shadow-sm border-0">
+    <div class="card-body">
 
-            <tbody>
+        <div class="table-responsive">
 
-                {% for report in lab_reports %}
+            <table class="table table-hover align-middle">
 
-                <tr>
-                    <td>
-                        {{ report.patient.patient.user.get_full_name|default:report.patient.patient.user.username }}
-                    </td>
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Test Name</th>
+                        <th>Test Date</th>
+                        <th>Appointment</th>
+                        <th>Result</th>
+                        <th>Report File</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
-                    <td>{{ report.test_name }}</td>
+                <tbody>
 
-                    <td>{{ report.test_date|date:"d M Y" }}</td>
+                    {% for report in lab_reports %}
 
-                    <td>{{ report.result_summary|default:"-" }}</td>
+                    <tr>
 
-                    <td>{{ report.remarks|default:"-" }}</td>
+                        <td>
+                            {{ report.patient.patient.user.get_full_name|default:report.patient.patient.user.username }}
+                        </td>
 
-                    <td>
-                        {% if report.report_file %}
-                            <a href="{{ report.report_file.url }}"
-                               target="_blank"
-                               rel="noopener">
-                                <i class="fas fa-file-pdf"></i> View Report
+                        <td>{{ report.test_name }}</td>
+
+                        <td>
+                            {{ report.test_date|date:"d M Y" }}
+                        </td>
+
+                        <td>
+                            {% if report.appointment %}
+                                {{ report.appointment.date|date:"d M Y" }}
+                            {% else %}
+                                <span class="text-muted">Not linked</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {{ report.result_summary|truncatewords:8 }}
+                        </td>
+
+                        <td>
+                            {% if report.report_file %}
+                                <a href="{{ report.report_file.url }}"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
+                                    View Report
+                                </a>
+                            {% else %}
+                                <span class="text-muted">No file</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+
+                            <a href="{% url 'doctor_edit_lab_report' report.id %}"
+                               class="btn btn-sm btn-warning">
+                                Edit
                             </a>
-                        {% else %}
-                            -
-                        {% endif %}
-                    </td>
-                </tr>
 
-                {% empty %}
+                            <form method="POST"
+                                  action="{% url 'doctor_delete_lab_report' report.id %}"
+                                  class="d-inline"
+                                  onsubmit="return confirm('Delete this lab report?');">
 
-                <tr>
-                    <td colspan="6" class="text-center text-muted py-4">
-                        No lab reports found.
-                    </td>
-                </tr>
+                                {% csrf_token %}
 
-                {% endfor %}
+                                <button type="submit"
+                                        class="btn btn-sm btn-danger">
+                                    Delete
+                                </button>
 
-            </tbody>
+                            </form>
 
-        </table>
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="7"
+                            class="text-center text-muted py-4">
+                            No lab reports available.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
-
 </div>
 
 {% endblock %}

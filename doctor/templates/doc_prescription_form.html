@@ -1,0 +1,113 @@
+
+{% extends 'doc_base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block page_heading %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if appointments %}
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold">
+                        Select Appointment
+                    </label>
+
+                    <select name="appointment"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select Appointment</option>
+
+                        {% for appointment in appointments %}
+                            <option value="{{ appointment.id }}">
+                                {{ appointment.patient.patient.user.get_full_name|default:appointment.patient.patient.user.username }}
+                                - {{ appointment.date }}
+                                - {{ appointment.time }}
+                            </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+            {% endif %}
+
+            <h5 class="mb-3">Medicine Details</h5>
+
+            {{ formset.management_form }}
+
+            {% if formset.non_form_errors %}
+                <div class="alert alert-danger">
+                    {{ formset.non_form_errors }}
+                </div>
+            {% endif %}
+
+            {% for form in formset %}
+
+                <div class="border rounded p-3 mb-3">
+
+                    <h6>Medicine {{ forloop.counter }}</h6>
+
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+
+                    {% for field in form.visible_fields %}
+
+                        {% if field.name != 'DELETE' %}
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    {{ field.label }}
+                                </label>
+
+                                {{ field }}
+
+                                {% if field.errors %}
+                                    <div class="text-danger small">
+                                        {{ field.errors }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {% if formset.can_delete %}
+                        <div class="form-check">
+                            {{ form.DELETE }}
+
+                            <label class="form-check-label">
+                                Remove this medicine
+                            </label>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary">
+                Save Prescription
+            </button>
+
+            <a href="{% url 'doctor_prescriptions' %}"
+               class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

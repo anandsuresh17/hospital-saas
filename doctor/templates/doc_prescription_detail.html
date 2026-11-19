@@ -1,0 +1,98 @@
+
+{% extends 'doc_base.html' %}
+
+{% block title %}Prescription Details{% endblock %}
+{% block page_heading %}Prescription Details{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+
+        <h5 class="mb-3">Patient Information</h5>
+
+        <p>
+            <strong>Patient:</strong>
+            {{ prescription.patient.patient.user.get_full_name|default:prescription.patient.patient.user.username }}
+        </p>
+
+        <p>
+            <strong>Patient ID:</strong>
+            {{ prescription.patient.patient_id_code }}
+        </p>
+
+        <p>
+            <strong>Appointment:</strong>
+            {{ prescription.appointment.date|date:"d M Y" }}
+        </p>
+
+        <p>
+            <strong>Doctor:</strong>
+            {{ prescription.doctor.user.get_full_name|default:prescription.doctor.user.username }}
+        </p>
+
+        <p>
+            <strong>Prescription Date:</strong>
+            {{ prescription.created_at|date:"d M Y" }}
+        </p>
+
+        <hr>
+
+        <h5 class="mb-3">Prescribed Medicines</h5>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered">
+
+                <thead>
+                    <tr>
+                        <th>Medicine</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>Duration</th>
+                        <th>Instructions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for medicine in prescription.medicines.all %}
+
+                    <tr>
+                        <td>{{ medicine.medicine_name }}</td>
+                        <td>{{ medicine.dosage }}</td>
+                        <td>{{ medicine.frequency }}</td>
+                        <td>{{ medicine.duration }}</td>
+                        <td>{{ medicine.instructions }}</td>
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            No medicines available.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <a href="{% url 'doctor_prescriptions' %}"
+           class="btn btn-secondary">
+            Back
+        </a>
+
+        <a href="{% url 'doctor_edit_prescription' prescription.id %}"
+           class="btn btn-warning">
+            Edit Prescription
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}
